@@ -1,0 +1,93 @@
+c:\Program Files\Java\jdk1.8.0_25\bin>jstack 5092
+2015-03-13 20:29:00
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.25-b02 mixed mode):
+
+"Thread-0" #10 prio=5 os_prio=0 tid=0x000000001d78f800 nid=0x1d40 waiting for monitor entry [0x000000001d3ef000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at com.cdp.app.DeadlockSimulator.transfer(DeadlockSimulator.java:34)
+        - waiting to lock <0x000000076b066bf8> (a com.cdp.app.Account)
+        - locked <0x000000076b066be8> (a com.cdp.app.Account)
+        at com.cdp.app.DeadlockSimulator$1.run(DeadlockSimulator.java:13)
+        at java.lang.Thread.run(Unknown Source)
+
+"Service Thread" #9 daemon prio=9 os_prio=0 tid=0x000000001d762800 nid=0x13c4 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread2" #8 daemon prio=9 os_prio=2 tid=0x000000001bd0b800 nid=0x227c waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #7 daemon prio=9 os_prio=2 tid=0x000000001bd09800 nid=0xfdc waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #6 daemon prio=9 os_prio=2 tid=0x000000001bd06800 nid=0x2124 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" #5 daemon prio=5 os_prio=2 tid=0x000000001bd03800 nid=0x23b4 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=2 tid=0x000000001bd02000 nid=0x2058 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=1 tid=0x000000001bca2000 nid=0x2320 in Object.wait() [0x000000001cf0f000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x000000076b006280> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(Unknown Source)
+        - locked <0x000000076b006280> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(Unknown Source)
+        at java.lang.ref.Finalizer$FinalizerThread.run(Unknown Source)
+
+"Reference Handler" #2 daemon prio=10 os_prio=2 tid=0x000000001bc99000 nid=0x23d8 in Object.wait() [0x000000001cd3f000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x000000076b005cf0> (a java.lang.ref.Reference$Lock)
+        at java.lang.Object.wait(Unknown Source)
+        at java.lang.ref.Reference$ReferenceHandler.run(Unknown Source)
+        - locked <0x000000076b005cf0> (a java.lang.ref.Reference$Lock)
+
+"main" #1 prio=5 os_prio=0 tid=0x000000000034e800 nid=0x1954 waiting for monitor entry [0x00000000021ef000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at com.cdp.app.DeadlockSimulator.transfer(DeadlockSimulator.java:34)
+        - waiting to lock <0x000000076b066be8> (a com.cdp.app.Account)
+        - locked <0x000000076b066bf8> (a com.cdp.app.Account)
+        at com.cdp.app.DeadlockSimulator.main(DeadlockSimulator.java:17)
+
+"VM Thread" os_prio=2 tid=0x000000001bc95000 nid=0x978 runnable
+
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x0000000001dcc800 nid=0x2340 runnable
+
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x0000000001dce000 nid=0x1be4 runnable
+
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x0000000001dcf800 nid=0x304 runnable
+
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x0000000001dd3000 nid=0xbf0 runnable
+
+"VM Periodic Task Thread" os_prio=2 tid=0x000000001d77e000 nid=0x1b0c waiting on condition
+
+JNI global references: 7
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-0":
+  waiting to lock monitor 0x000000001bc9f728 (object 0x000000076b066bf8, a com.cdp.app.Account),
+  which is held by "main"
+"main":
+  waiting to lock monitor 0x000000001bc9e1d8 (object 0x000000076b066be8, a com.cdp.app.Account),
+  which is held by "Thread-0"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-0":
+        at com.cdp.app.DeadlockSimulator.transfer(DeadlockSimulator.java:34)
+        - waiting to lock <0x000000076b066bf8> (a com.cdp.app.Account)
+        - locked <0x000000076b066be8> (a com.cdp.app.Account)
+        at com.cdp.app.DeadlockSimulator$1.run(DeadlockSimulator.java:13)
+        at java.lang.Thread.run(Unknown Source)
+"main":
+        at com.cdp.app.DeadlockSimulator.transfer(DeadlockSimulator.java:34)
+        - waiting to lock <0x000000076b066be8> (a com.cdp.app.Account)
+        - locked <0x000000076b066bf8> (a com.cdp.app.Account)
+        at com.cdp.app.DeadlockSimulator.main(DeadlockSimulator.java:17)
+
+Found 1 deadlock.
