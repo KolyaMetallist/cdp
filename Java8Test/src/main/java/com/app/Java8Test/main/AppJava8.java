@@ -16,8 +16,10 @@ public class AppJava8 {
 	
     public static void main( String[] args ) {
         JCommanderParameters parameters = new JCommanderParameters();
-        JCommander jCommander = new JCommander(parameters, args);
+        JCommander jCommander = new JCommander(parameters);
+        jCommander.setProgramName("Java 8 Text Analyzer");
         try {
+        	jCommander.parse(args);
 	        if (parameters.isHelp()) {
 	        	jCommander.usage();
 	        } else {
