@@ -24,7 +24,7 @@ public class AppJava8 {
 	        if (parameters.isHelp()) {
 	        	jCommander.usage();
 	        } else {
-	        	System.out.println("work");
+	        	//System.out.println("work");
 	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor(parameters.getFile(),
 	        														parameters.getCommand(),
 	        														parameters.isParallel());
