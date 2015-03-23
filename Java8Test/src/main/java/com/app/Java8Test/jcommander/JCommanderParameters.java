@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.app.Java8Test.jcommander.converters.FileConverter;
 import com.app.Java8Test.jcommander.converters.ProcessCommandConverter;
+import com.app.Java8Test.main.ProcessCommandEnum;
 import com.beust.jcommander.Parameter;
 
 public class JCommanderParameters {
@@ -17,7 +18,7 @@ public class JCommanderParameters {
 			description = "Process task",
 			converter = ProcessCommandConverter.class,
 			required = true)
-	private ProcessCommandConverter command;
+	private ProcessCommandEnum command;
 	
 	@Parameter(names = {"-p", "--parallel"},
 			description = "Parallel")
@@ -34,11 +35,11 @@ public class JCommanderParameters {
 		this.file = file;
 	}
 
-	public ProcessCommandConverter getCommand() {
+	public ProcessCommandEnum getCommand() {
 		return command;
 	}
 
-	public void setCommand(ProcessCommandConverter command) {
+	public void setCommand(ProcessCommandEnum command) {
 		this.command = command;
 	}
 

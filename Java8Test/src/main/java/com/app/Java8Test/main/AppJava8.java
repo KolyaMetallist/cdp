@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.app.Java8Test.jcommander.JCommanderParameters;
+import com.app.Java8Test.processor.TextAnalyzerProcessor;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 /**
- * Hello world!
+ * Main Class
  *
  */
 public class AppJava8 {
@@ -23,7 +24,8 @@ public class AppJava8 {
 	        if (parameters.isHelp()) {
 	        	jCommander.usage();
 	        } else {
-	        	
+	        	System.out.println("work");
+	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor();
 	        }
         } catch (ParameterException e) {
         	System.out.println(e.getMessage());
