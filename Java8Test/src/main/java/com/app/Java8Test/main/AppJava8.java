@@ -25,7 +25,10 @@ public class AppJava8 {
 	        	jCommander.usage();
 	        } else {
 	        	System.out.println("work");
-	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor();
+	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor(parameters.getFile(),
+	        														parameters.getCommand(),
+	        														parameters.isParallel());
+	        	pr.execute();
 	        }
         } catch (ParameterException e) {
         	System.out.println(e.getMessage());
