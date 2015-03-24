@@ -72,10 +72,55 @@
                     <argument>-i</argument>
                     <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
                     <argument>-t</argument>
-                     <argument>frequency</argument>
+                    <argument>frequency</argument>
                 </arguments>
   			</configuration>
   		</plugin>
   	</plugins>
   </build>
+  
+  <profiles>
+  	<profile>
+  		<id>java8-frequency</id>
+        <build>
+        	<plugins>
+            	<plugin>
+            		<groupId>org.codehaus.mojo</groupId>
+		  			<artifactId>exec-maven-plugin</artifactId>
+		  			<configuration>
+		  				<mainClass>com.app.java8test.main.AppJava8</mainClass>
+		                <arguments>
+		                    <argument>-i</argument>
+		                    <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
+		                    <argument>-t</argument>
+		                    <argument>frequency</argument>
+		                </arguments>
+		  			</configuration>
+                </plugin>
+            </plugins>
+        </build>
+  	</profile>
+  	
+  	<profile>
+  		<id>java8-frequency-p</id>
+        <build>
+        	<plugins>
+            	<plugin>
+            		<groupId>org.codehaus.mojo</groupId>
+		  			<artifactId>exec-maven-plugin</artifactId>
+		  			<configuration>
+		  				<mainClass>com.app.java8test.main.AppJava8</mainClass>
+		                <arguments>
+		                    <argument>-i</argument>
+		                    <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
+		                    <argument>-t</argument>
+		                    <argument>frequency</argument>
+		                    <argument>-p</argument>
+		                </arguments>
+		  			</configuration>
+                </plugin>
+            </plugins>
+        </build>
+  	</profile>
+  </profiles>
 </project>

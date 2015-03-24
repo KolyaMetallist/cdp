@@ -1,4 +1,4 @@
-activeProfiles=
+activeProfiles=java8-frequency, java8-frequency-p
 eclipse.preferences.version=1
 resolveWorkspaceProjects=true
 version=1
