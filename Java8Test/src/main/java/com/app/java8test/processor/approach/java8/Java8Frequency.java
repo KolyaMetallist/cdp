@@ -19,11 +19,11 @@ public class Java8Frequency implements Java8Approach {
 					.parallelStream() // Stream<String>
 					.collect(groupingByConcurrent(e -> e, counting())) // convert to Map of words and their frequency
 					.entrySet() // extract entrySet from Map
-					.stream() // Stream<Entry<String, Long>>
+					.parallelStream() // Stream<Entry<String, Long>>
 					.sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())) // sorting by value descending
 					.limit(2) // truncate 2 top entries
 					.sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey())) // sorting by words descending
-					.forEach(printer::println);
+					.forEachOrdered(printer::println);
 			} else {
 				this.readWordsFromText(file, parallel)
 					.stream() // Stream<String>
