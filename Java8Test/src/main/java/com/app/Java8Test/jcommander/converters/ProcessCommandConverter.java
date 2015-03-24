@@ -1,6 +1,6 @@
-package com.app.Java8Test.jcommander.converters;
+package com.app.java8test.jcommander.converters;
 
-import com.app.Java8Test.main.ProcessCommandEnum;
+import com.app.java8test.main.ProcessCommandEnum;
 import com.beust.jcommander.IStringConverter;
 
 public class ProcessCommandConverter implements

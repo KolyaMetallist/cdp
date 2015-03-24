@@ -1,8 +1,11 @@
-package com.app.Java8Test.processor;
+package com.app.java8test.processor;
 
 import java.io.File;
+import java.io.PrintStream;
 
-import com.app.Java8Test.main.ProcessCommandEnum;
+import com.app.java8test.main.ApproachCommandEnum;
+import com.app.java8test.main.ProcessCommandEnum;
+import com.app.java8test.processor.approach.AbstractApproachFactory;
 
 public class TextAnalyzerProcessor {
 	
@@ -11,26 +14,34 @@ public class TextAnalyzerProcessor {
 	private ProcessCommandEnum command;
 	
 	private boolean parallel;
+	
+	private ApproachCommandEnum approach;
 
 	public TextAnalyzerProcessor(File file, ProcessCommandEnum command,
-			boolean parallel) {
+			boolean parallel, ApproachCommandEnum approach) {
 		this.file = file;
 		this.command = command;
 		this.parallel = parallel;
+		this.approach = approach;
 	}
 
 	public void execute() {
-		switch (command) {
-			case frequency:
-				ApproachFactory.getApproach("Java8").frequenceTask(file, parallel);
-				break;
-			case duplicates:
-				break;
-			case length:
-				break;
-			default:
-				break;
-		}	
+		PrintStream printer = System.out;
+		StringBuffer str = new StringBuffer()
+			.append("Command: " + command)
+			.append("\nApproach: " + approach)
+			.append("\nParallel: " + parallel + "\n");
+		printer.println(str);
+		
+		long tStart = System.currentTimeMillis();
+		
+		AbstractApproachFactory
+			.getInstance(approach)
+			.getApproachTask(command)
+			.taskExecution(file, parallel, printer);	
+		
+		long elapsedTime = System.currentTimeMillis() - tStart;
+		printer.println("\nElapsed time: " + elapsedTime + " ms");
 	}
 
 }

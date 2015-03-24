@@ -1,6 +1,7 @@
-package com.app.Java8Test.main;
+package com.app.java8test.main;
 
 import java.util.Arrays;
+
 import com.beust.jcommander.ParameterException;
 
 public enum ProcessCommandEnum {

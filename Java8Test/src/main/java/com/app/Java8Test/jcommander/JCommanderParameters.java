@@ -1,10 +1,12 @@
-package com.app.Java8Test.jcommander;
+package com.app.java8test.jcommander;
 
 import java.io.File;
 
-import com.app.Java8Test.jcommander.converters.FileConverter;
-import com.app.Java8Test.jcommander.converters.ProcessCommandConverter;
-import com.app.Java8Test.main.ProcessCommandEnum;
+import com.app.java8test.jcommander.converters.ApproachCommandConverter;
+import com.app.java8test.jcommander.converters.FileConverter;
+import com.app.java8test.jcommander.converters.ProcessCommandConverter;
+import com.app.java8test.main.ApproachCommandEnum;
+import com.app.java8test.main.ProcessCommandEnum;
 import com.beust.jcommander.Parameter;
 
 public class JCommanderParameters {
@@ -18,11 +20,17 @@ public class JCommanderParameters {
 			description = "Process task",
 			converter = ProcessCommandConverter.class,
 			required = true)
-	private ProcessCommandEnum command;
+	private ProcessCommandEnum task;
 	
 	@Parameter(names = {"-p", "--parallel"},
 			description = "Parallel")
 	private boolean isParallel = false;
+	
+	@Parameter(names = {"-a", "--approach"},
+			description = "Approach: Java8 or NonJava8",
+			converter = ApproachCommandConverter.class,
+			required = false)
+	private ApproachCommandEnum approach = ApproachCommandEnum.Java8;
 	
 	@Parameter(names = "--help", help = true)
 	private boolean help;
@@ -35,12 +43,12 @@ public class JCommanderParameters {
 		this.file = file;
 	}
 
-	public ProcessCommandEnum getCommand() {
-		return command;
+	public ProcessCommandEnum getTask() {
+		return task;
 	}
 
-	public void setCommand(ProcessCommandEnum command) {
-		this.command = command;
+	public void setTask(ProcessCommandEnum task) {
+		this.task = task;
 	}
 
 	public boolean isParallel() {
@@ -49,6 +57,14 @@ public class JCommanderParameters {
 
 	public void setParallel(boolean isParallel) {
 		this.isParallel = isParallel;
+	}
+
+	public ApproachCommandEnum getApproach() {
+		return approach;
+	}
+
+	public void setApproach(ApproachCommandEnum approach) {
+		this.approach = approach;
 	}
 
 	public boolean isHelp() {

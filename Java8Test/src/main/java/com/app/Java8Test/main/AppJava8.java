@@ -1,11 +1,7 @@
-package com.app.Java8Test.main;
+package com.app.java8test.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import com.app.Java8Test.jcommander.JCommanderParameters;
-import com.app.Java8Test.processor.TextAnalyzerProcessor;
+import com.app.java8test.jcommander.JCommanderParameters;
+import com.app.java8test.processor.TextAnalyzerProcessor;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
@@ -26,8 +22,9 @@ public class AppJava8 {
 	        } else {
 	        	//System.out.println("work");
 	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor(parameters.getFile(),
-	        														parameters.getCommand(),
-	        														parameters.isParallel());
+	        														parameters.getTask(),
+	        														parameters.isParallel(),
+	        														parameters.getApproach());
 	        	pr.execute();
 	        }
         } catch (ParameterException e) {

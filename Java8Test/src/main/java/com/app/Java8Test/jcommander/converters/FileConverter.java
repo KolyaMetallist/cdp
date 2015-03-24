@@ -1,4 +1,4 @@
-package com.app.Java8Test.jcommander.converters;
+package com.app.java8test.jcommander.converters;
 
 import java.io.File;
 
