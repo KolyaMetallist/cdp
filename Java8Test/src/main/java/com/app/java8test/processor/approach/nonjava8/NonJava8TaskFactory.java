@@ -13,9 +13,9 @@ public class NonJava8TaskFactory extends AbstractApproachTaskFactory {
 		case frequency:
 			return new NonJava8Frequency();
 		case length:
-			return null;
+			return new NonJava8Length();
 		case duplicates:
-			return null;
+			return new NonJava8Duplicates();
 		default:
 			return null;
 		}

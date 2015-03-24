@@ -14,7 +14,7 @@ public class Java8TaskFactory extends AbstractApproachTaskFactory {
 		case length:
 			return new Java8Length();
 		case duplicates:
-			return null;
+			return new Java8Duplicates();
 		default:
 			return null;
 		}
