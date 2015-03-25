@@ -70,7 +70,7 @@
   				<mainClass>com.app.java8test.main.AppJava8</mainClass>
                 <arguments>
                     <argument>-i</argument>
-                    <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
+                    <argument>input.txt</argument>
                     <argument>-t</argument>
                     <argument>frequency</argument>
                 </arguments>
@@ -91,7 +91,7 @@
 		  				<mainClass>com.app.java8test.main.AppJava8</mainClass>
 		                <arguments>
 		                    <argument>-i</argument>
-		                    <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
+		                    <argument>input.txt</argument>
 		                    <argument>-t</argument>
 		                    <argument>frequency</argument>
 		                </arguments>
@@ -112,7 +112,7 @@
 		  				<mainClass>com.app.java8test.main.AppJava8</mainClass>
 		                <arguments>
 		                    <argument>-i</argument>
-		                    <argument>d:\LABS\epam\trainings\JavaCDP\labs\git\gitHub\cdp\Java8Test\input.txt</argument>
+		                    <argument>input.txt</argument>
 		                    <argument>-t</argument>
 		                    <argument>frequency</argument>
 		                    <argument>-p</argument>
