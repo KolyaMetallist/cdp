@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class Java8Frequency implements Java8Approach {
 
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
-		List<?> list = new ArrayList<>();
+		List<Entry<String, Long>> list = new ArrayList<>();
 		try {
 			if (parallel) {
 				list = Collections.synchronizedList(this.readWordsFromText(file, parallel))

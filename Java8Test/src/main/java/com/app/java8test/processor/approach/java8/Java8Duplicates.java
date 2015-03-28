@@ -18,7 +18,7 @@ public class Java8Duplicates implements Java8Approach {
 
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
-		List<?> list = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		try {
 			if (parallel) {
 				list = Collections.synchronizedList(this.readWordsFromText(file, parallel))

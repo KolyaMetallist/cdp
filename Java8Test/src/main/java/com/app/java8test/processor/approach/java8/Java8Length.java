@@ -16,7 +16,7 @@ public class Java8Length implements Java8Approach {
 
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
-		List<?> list = new ArrayList<>();
+		List<Entry<String, Integer>> list = new ArrayList<>();
 		try {
 			if (parallel) {
 				list = Collections.synchronizedList(this.readWordsFromText(file, parallel))
