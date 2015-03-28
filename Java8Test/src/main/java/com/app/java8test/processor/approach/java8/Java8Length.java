@@ -2,21 +2,24 @@ package com.app.java8test.processor.approach.java8;
 
 import static java.util.Comparator.comparing;
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Java8Length implements Java8Approach {
 
 	@Override
-	public void taskExecution(File file, boolean parallel, PrintStream printer) {
+	public List<?> taskExecution(File file, boolean parallel) {
+		List<?> list = new ArrayList<>();
 		try {
 			if (parallel) {
-				Collections.synchronizedList(this.readWordsFromText(file, parallel))
+				list = Collections.synchronizedList(this.readWordsFromText(file, parallel))
 					.parallelStream() // Stream<String>
 					.distinct() // remove duplicates
 					.collect(Collectors.toMap(identity(), String::length)) // convert to map of words and their length
@@ -24,9 +27,9 @@ public class Java8Length implements Java8Approach {
 					.parallelStream() // Stream<Entry<String, Integer>>
 					.sorted(comparing((Entry<String, Integer> e) -> e.getValue()).reversed()) // sort by length descending
 					.limit(3) // truncate 3 top entries
-					.forEachOrdered(printer::println);	
+					.collect(toList());	
 			} else {			
-				this.readWordsFromText(file, parallel)
+				list = this.readWordsFromText(file, parallel)
 					.stream() // Stream<String>
 					.distinct() // remove duplicates
 					.collect(Collectors.toMap(identity(), String::length)) // convert to map of words and their length
@@ -34,11 +37,12 @@ public class Java8Length implements Java8Approach {
 					.stream() // Stream<Entry<String, Integer>>
 					.sorted(comparing((Entry<String, Integer> e) -> e.getValue()).reversed()) // sort by length descending
 					.limit(3) // truncate 3 top entries
-					.forEach(printer::println);				
+					.collect(toList());				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return list;
 	}
 
 }

@@ -3,21 +3,25 @@ package com.app.java8test.processor.approach.java8;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Java8Duplicates implements Java8Approach {
 
 	@Override
-	public void taskExecution(File file, boolean parallel, PrintStream printer) {
+	public List<?> taskExecution(File file, boolean parallel) {
+		List<?> list = new ArrayList<>();
 		try {
 			if (parallel) {
-				Collections.synchronizedList(this.readWordsFromText(file, parallel))
+				list = Collections.synchronizedList(this.readWordsFromText(file, parallel))
 					.parallelStream() // Stream<String>
 					.collect(groupingBy(e -> e, LinkedHashMap::new, counting())) // convert to Map of words and their frequency
 					.entrySet() // extract entrySet from Map
@@ -28,9 +32,9 @@ public class Java8Duplicates implements Java8Approach {
 					.map(String::toUpperCase) // convert to upper case
 					.map(e -> {return new StringBuffer(e).reverse().toString();}) // inverse
 					.sorted(comparing(String::length)) // sort by length ascending
-					.forEachOrdered(printer::println);
+					.collect(toList());
 			} else {
-				this.readWordsFromText(file, parallel)
+				list = this.readWordsFromText(file, parallel)
 					.stream() // Stream<String>
 					.collect(groupingBy(e -> e, LinkedHashMap::new, counting())) // convert to Map of words and their frequency
 					.entrySet() // extract entrySet from Map
@@ -41,11 +45,12 @@ public class Java8Duplicates implements Java8Approach {
 					.map(String::toUpperCase) // convert to upper case
 					.map(e -> {return new StringBuilder(e).reverse().toString();}) // inverse
 					.sorted(comparing(String::length)) // sort by length ascending
-					.forEach(printer::println);
+					.collect(toList());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return list;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.app.java8test.processor;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.util.Collections;
 
 import com.app.java8test.main.ApproachCommandEnum;
 import com.app.java8test.main.ProcessCommandEnum;
@@ -35,10 +36,22 @@ public class TextAnalyzerProcessor {
 		
 		long tStart = System.currentTimeMillis();
 		
-		AbstractApproachFactory
-			.getInstance(approach)
-			.getApproachTask(command)
-			.taskExecution(file, parallel, printer);	
+		if (parallel) {
+			Collections.synchronizedList(
+				AbstractApproachFactory
+					.getInstance(approach)
+					.getApproachTask(command)
+					.taskExecution(file, parallel))
+				.parallelStream()
+				.forEachOrdered(printer::println);
+		} else {
+			AbstractApproachFactory
+				.getInstance(approach)
+				.getApproachTask(command)
+				.taskExecution(file, parallel)
+				.stream()
+				.forEach(printer::println);
+		}
 		
 		long elapsedTime = System.currentTimeMillis() - tStart;
 		printer.println("\nElapsed time: " + elapsedTime + " ms");
