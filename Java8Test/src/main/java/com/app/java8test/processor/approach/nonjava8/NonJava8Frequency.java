@@ -10,12 +10,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * This class implements Non-Java 8 approach for the task "Frequency"
+ * 
+ * Find the most two frequent words and print them out sorted alphabetically in a reversed order. (Task name: frequency). 
+ *	good -> 23
+ *	allow -> 2
+ *
+ */
 public class NonJava8Frequency implements NonJava8Approach {
 
+	/**
+	 * @param file - the input file
+	 * @param flag - the flag for single/multi threading
+	 * @return list of words
+	 * 
+	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
+	 */
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<Entry<String, Integer>> entryList = new ArrayList<>();
 		try {
+			
 			Map<String, Integer> wordsFrequency = new HashMap<>();
 			for(String word : this.readWordsFromText(file, parallel)) {
 				if (wordsFrequency.containsKey(word)) {

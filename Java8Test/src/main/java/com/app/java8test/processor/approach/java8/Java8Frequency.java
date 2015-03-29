@@ -14,8 +14,23 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements Java 8 approach for the task "Frequency"
+ * 
+ * Find the most two frequent words and print them out sorted alphabetically in a reversed order. (Task name: frequency). 
+ *	good -> 23
+ *	allow -> 2
+ *
+ */
 public class Java8Frequency implements Java8Approach {
 
+	/**
+	 * @param file - the input file
+	 * @param flag - the flag for single/multi threading
+	 * @return list of words
+	 * 
+	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
+	 */
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<Entry<String, Long>> list = new ArrayList<>();

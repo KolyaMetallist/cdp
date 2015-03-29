@@ -26,7 +26,6 @@ public class TextAnalyzerProcessor {
 		this.approach = approach;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void execute() {
 		PrintStream printer = System.out;
 		StringBuffer str = new StringBuffer()

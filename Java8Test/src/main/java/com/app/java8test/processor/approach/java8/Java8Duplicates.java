@@ -16,6 +16,13 @@ import java.util.stream.Collectors;
 
 public class Java8Duplicates implements Java8Approach {
 
+	/**
+	 * @param file - the input file
+	 * @param flag - the flag for single/multi threading
+	 * @return list of words
+	 * 
+	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
+	 */
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<String> list = new ArrayList<>();
