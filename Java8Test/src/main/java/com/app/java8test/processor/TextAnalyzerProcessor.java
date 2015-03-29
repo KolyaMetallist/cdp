@@ -8,6 +8,11 @@ import com.app.java8test.main.ApproachCommandEnum;
 import com.app.java8test.main.ProcessCommandEnum;
 import com.app.java8test.processor.approach.AbstractApproachFactory;
 
+/**
+ * This class is intended to execute the appropriate text analyse 
+ * task according to the input parameters
+ *
+ */
 public class TextAnalyzerProcessor {
 	
 	private File file;
@@ -26,6 +31,9 @@ public class TextAnalyzerProcessor {
 		this.approach = approach;
 	}
 
+	/**
+	 *  Execution method
+	 */
 	public void execute() {
 		PrintStream printer = System.out;
 		StringBuffer str = new StringBuffer()

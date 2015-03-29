@@ -21,6 +21,8 @@ import java.util.Map.Entry;
 public class NonJava8Frequency implements NonJava8Approach {
 
 	/**
+	 * Executes the text analyzer task
+	 * 
 	 * @param file - the input file
 	 * @param flag - the flag for single/multi threading
 	 * @return list of words

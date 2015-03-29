@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 import com.beust.jcommander.ParameterException;
 
+/**
+ * Class holds the task options: frequency, length, duplicates
+ *
+ */
 public enum ProcessCommandEnum {
 	
 	frequency,

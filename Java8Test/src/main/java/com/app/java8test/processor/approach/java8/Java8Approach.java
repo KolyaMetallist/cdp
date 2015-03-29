@@ -11,8 +11,22 @@ import com.app.java8test.processor.approach.Approach;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * This interface extends the general interface Approach
+ * and implement the default file reading for Java 8 approach
+ *
+ */
 public interface Java8Approach extends Approach {
 	
+	/**
+	 * Returns the list of words from the text
+	 * 
+	 * @param file - the input file
+	 * @param parallel - the flag for single/multi threading
+	 * @return list of words
+	 * 
+	 * @see com.app.java8test.processor.approach.Approach#readWordsFromText(java.io.File, boolean)
+	 */
 	default List<String> readWordsFromText(File file, boolean parallel) throws IOException{
 		return parallel ? 
 			Files.lines(file.toPath())

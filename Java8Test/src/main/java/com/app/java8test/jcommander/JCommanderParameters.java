@@ -9,6 +9,10 @@ import com.app.java8test.main.ApproachCommandEnum;
 import com.app.java8test.main.ProcessCommandEnum;
 import com.beust.jcommander.Parameter;
 
+/**
+ * Provides the command line parameters and their mapping to the objects
+ *
+ */
 public class JCommanderParameters {
 	@Parameter(names = {"-i", "--input"}, 
 			description = "Input file", 

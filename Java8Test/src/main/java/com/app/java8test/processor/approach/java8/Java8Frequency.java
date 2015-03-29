@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 public class Java8Frequency implements Java8Approach {
 
 	/**
+	 * Executes the text analyzer task
+	 * 
 	 * @param file - the input file
 	 * @param flag - the flag for single/multi threading
-	 * @return list of words
+	 * @return list of results
 	 * 
 	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
 	 */

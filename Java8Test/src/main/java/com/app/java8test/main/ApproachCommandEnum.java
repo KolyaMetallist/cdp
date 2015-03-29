@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 import com.beust.jcommander.ParameterException;
 
+/**
+ * Class holds the approach options: Java8 and NonJava8
+ *
+ */
 public enum ApproachCommandEnum {
 	
 	Java8,

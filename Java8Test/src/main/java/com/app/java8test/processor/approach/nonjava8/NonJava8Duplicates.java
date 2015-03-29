@@ -12,8 +12,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * This class implements Non-Java 8 approach for the task "Duplicates"
+ * 
+ * Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
+ * battle -> 6
+ * map -> 3 
+ * a – 1
+ *
+ */
 public class NonJava8Duplicates implements NonJava8Approach {
 
+	/**
+	 * Executes the text analyzer task
+	 * 
+	 * @param file - the input file
+	 * @param flag - the flag for single/multi threading
+	 * @return list of results
+	 * 
+	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
+	 */
 	@Override
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<String> list = new ArrayList<>();	

@@ -4,6 +4,11 @@ import com.app.java8test.main.ProcessCommandEnum;
 import com.app.java8test.processor.approach.AbstractApproachTaskFactory;
 import com.app.java8test.processor.approach.Approach;
 
+/**
+ * This factory provides the instance of Approach implementation
+ * related to Java 8 approach according to the input task option
+ *
+ */
 public class Java8TaskFactory extends AbstractApproachTaskFactory {
 
 	@Override

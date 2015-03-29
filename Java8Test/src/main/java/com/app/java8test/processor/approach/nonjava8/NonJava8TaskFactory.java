@@ -5,6 +5,11 @@ import com.app.java8test.processor.approach.AbstractApproachTaskFactory;
 import com.app.java8test.processor.approach.Approach;
 import com.app.java8test.processor.approach.java8.Java8Frequency;
 
+/**
+ * This factory provides the instance of Approach implementation
+ * related to Java 8 approach according to the input task option
+ *
+ */
 public class NonJava8TaskFactory extends AbstractApproachTaskFactory {
 
 	@Override

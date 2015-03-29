@@ -20,7 +20,6 @@ public class AppJava8 {
 	        if (parameters.isHelp()) {
 	        	jCommander.usage();
 	        } else {
-	        	//System.out.println("work");
 	        	TextAnalyzerProcessor pr = new TextAnalyzerProcessor(parameters.getFile(),
 	        														parameters.getTask(),
 	        														parameters.isParallel(),

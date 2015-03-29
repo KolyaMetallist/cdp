@@ -12,12 +12,23 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements Non-Java 8 approach for the task "Length"
+ * 
+ * Find first three words which have duplicates and print them inversely (e.g. map -> pam) in the upper case sorted by length in ascending order. (task name: duplicates)
+ * PAM
+ * WOLLA
+ * STNEMUGRA
+ *
+ */
 public class Java8Length implements Java8Approach {
 
 	/**
+	 * Executes the text analyzer task
+	 * 
 	 * @param file - the input file
 	 * @param flag - the flag for single/multi threading
-	 * @return list of words
+	 * @return list of results
 	 * 
 	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
 	 */

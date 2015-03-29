@@ -14,12 +14,23 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * This class implements Java 8 approach for the task "Duplicates"
+ * 
+ * Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
+ * battle -> 6
+ * map -> 3 
+ * a – 1
+ *
+ */
 public class Java8Duplicates implements Java8Approach {
 
 	/**
+	 * Executes the text analyzer task
+	 * 
 	 * @param file - the input file
 	 * @param flag - the flag for single/multi threading
-	 * @return list of words
+	 * @return list of results
 	 * 
 	 * @see com.app.java8test.processor.approach.Approach#taskExecution(java.io.File, boolean)
 	 */
