@@ -15,10 +15,10 @@ import java.util.Set;
 /**
  * This class implements Non-Java 8 approach for the task "Length"
  * 
- * Find first three words which have duplicates and print them inversely (e.g. map -> pam) in the upper case sorted by length in ascending order. (task name: duplicates)
- * PAM
- * WOLLA
- * STNEMUGRA
+ * Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
+ * battle -> 6
+ * map -> 3 
+ * a – 1
  *
  */
 public class NonJava8Length implements NonJava8Approach {
@@ -39,11 +39,13 @@ public class NonJava8Length implements NonJava8Approach {
 		try {
 			List<String> words = this.readWordsFromText(file, parallel);
 			
+			// remove duplicates from the list of words
 			Set<String> uniques = new HashSet<>();
 			uniques.addAll(words);
 			words.clear();
 			words.addAll(uniques);
 			
+			// sort the list by the length of words descending
 			Collections.sort(words, new Comparator<String>(){
 
 				@Override
@@ -54,13 +56,16 @@ public class NonJava8Length implements NonJava8Approach {
 				
 			});
 			
+			// identify the top index
 			int topIndex = words.size() > 2 ? 3 : words.size() > 1 ? 2 : words.size() > 0 ? 1 : 0;
 			
+			// create the map of the words and their length from the list truncated list
 			Map<String, Integer> map = new LinkedHashMap<>();
 			for(String s : words.subList(0, topIndex)) {
 				map.put(s, s.length());
 			}
 			
+			// transform the map to the list of entries
 			list.addAll(map.entrySet());
 		} catch (IOException e) {
 			e.printStackTrace();

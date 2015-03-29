@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 /**
  * This class implements Java 8 approach for the task "Duplicates"
  * 
- * Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
- * battle -> 6
- * map -> 3 
- * a – 1
+ * Find first three words which have duplicates and print them inversely (e.g. map -> pam) in the upper case sorted by length in ascending order. (task name: duplicates)
+ * PAM
+ * WOLLA
+ * STNEMUGRA
  *
  */
 public class Java8Duplicates implements Java8Approach {

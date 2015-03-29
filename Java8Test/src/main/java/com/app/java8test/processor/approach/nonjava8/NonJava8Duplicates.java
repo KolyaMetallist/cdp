@@ -15,10 +15,10 @@ import java.util.Map.Entry;
 /**
  * This class implements Non-Java 8 approach for the task "Duplicates"
  * 
- * Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
- * battle -> 6
- * map -> 3 
- * a – 1
+ * Find first three words which have duplicates and print them inversely (e.g. map -> pam) in the upper case sorted by length in ascending order. (task name: duplicates)
+ * PAM
+ * WOLLA
+ * STNEMUGRA
  *
  */
 public class NonJava8Duplicates implements NonJava8Approach {
@@ -36,6 +36,7 @@ public class NonJava8Duplicates implements NonJava8Approach {
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<String> list = new ArrayList<>();	
 		try {
+			// put in the map the words and their occurrence 
 			Map<String, Integer> wordsFrequency = new LinkedHashMap<>();
 			for(String word : this.readWordsFromText(file, parallel)) {
 				if (wordsFrequency.containsKey(word)) {
@@ -45,6 +46,7 @@ public class NonJava8Duplicates implements NonJava8Approach {
 				}
 			}
 			
+			// remove unique words
 			for(Iterator<Entry<String, Integer>> it = wordsFrequency.entrySet().iterator(); it.hasNext();) {
 				Entry<String, Integer> entry = it.next();
 				if (entry.getValue() < 2) {
@@ -52,10 +54,14 @@ public class NonJava8Duplicates implements NonJava8Approach {
 				}
 			}
 			
+			// create the list of duplicates
 			list.addAll(wordsFrequency.keySet());
+			// identify the top index
 			int topIndex = list.size() > 2 ? 3 : list.size() > 1 ? 2 : list.size() > 0 ? 1 : 0;
+			// truncate the list
 			list = list.subList(0, topIndex);
 			
+			// sort the list by the word length ascending
 			Collections.sort(list, new Comparator<String>() {
 
 				@Override
@@ -66,6 +72,7 @@ public class NonJava8Duplicates implements NonJava8Approach {
 				
 			});
 			
+			// reverse the words and transform them to upper case
 			for(String s : list) {
 				list.set(list.indexOf(s),
 							new StringBuilder(s)
