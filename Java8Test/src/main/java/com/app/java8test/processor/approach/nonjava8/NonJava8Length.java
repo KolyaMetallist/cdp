@@ -3,6 +3,7 @@ package com.app.java8test.processor.approach.nonjava8;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class implements Non-Java 8 approach for the task "Length"
@@ -22,6 +28,14 @@ import java.util.Set;
  *
  */
 public class NonJava8Length implements NonJava8Approach {
+
+	private final Comparator<String> stringByLength = new Comparator<String>() {
+		@Override
+		public int compare(String o1, String o2) {
+			return Integer.valueOf(o2.length())
+					.compareTo(Integer.valueOf(o1.length()));
+		}
+	};
 
 	/**
 	 * Executes the text analyzer task
@@ -44,17 +58,13 @@ public class NonJava8Length implements NonJava8Approach {
 			uniques.addAll(words);
 			words.clear();
 			words.addAll(uniques);
-			
-			// sort the list by the length of words descending
-			Collections.sort(words, new Comparator<String>(){
 
-				@Override
-				public int compare(String o1, String o2) {
-					return Integer.valueOf(o2.length())
-							.compareTo(Integer.valueOf(o1.length()));
-				}
-				
-			});
+			// sort the list by the length of words descending
+			if (parallel) {
+				words = parallelMergeSort(words);
+			} else {
+				Collections.sort(words, stringByLength);
+			}
 			
 			// identify the top index
 			int topIndex = words.size() > 2 ? 3 : words.size() > 1 ? 2 : words.size() > 0 ? 1 : 0;
@@ -67,11 +77,84 @@ public class NonJava8Length implements NonJava8Approach {
 			
 			// transform the map to the list of entries
 			list.addAll(map.entrySet());
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 		return list;
 	}
+
+	/**
+	 * Sorts words by their length descending using Fork/Join Framework
+	 * 
+	 * @param words - list of words
+	 * @return - sorted list
+	 * @throws InterruptedException
+	 */
+	private List<String> parallelMergeSort(List<String> words) throws InterruptedException {
+		String[] values = words.toArray(new String[0]);
+		ForkJoinPool pool = new ForkJoinPool();
+		MergeSortStringByLength sort = new MergeSortStringByLength(values, 0, values.length);
+		pool.invoke(sort);
+
+		return Arrays.asList(sort.getResult());
+	}
+	
+	/**
+	 * Merge sort in parallel threads 
+	 * based on the Fork/Join Framework
+	 *
+	 */
+	class MergeSortStringByLength extends RecursiveAction {
+	    
+		private static final long serialVersionUID = 1L;
+		private static final int SEQUENTIAL_THRESHOLD = 1000;
+		private String[] numbers;
+	    private int startPos, endPos;
+	    private String[] result;
+	    
+	    public String[] getResult() {
+			return result;
+		}
+
+		public MergeSortStringByLength(String[] numbers, int startPos, int endPos) {
+			this.numbers = numbers;
+			this.startPos = startPos;
+			this.endPos = endPos;
+			this.result = new String[numbers.length];
+		}
+
+		private void merge(MergeSortStringByLength left, MergeSortStringByLength right) {
+	        int i=0, leftPos=0, rightPos=0, leftSize = left.size(), rightSize = right.size();
+	        while (leftPos < leftSize && rightPos < rightSize)
+	            result[i++] = (left.result[leftPos].length() >= right.result[rightPos].length())
+	                    ? left.result[leftPos++]
+	                    : right.result[rightPos++];
+	        while (leftPos < leftSize)
+	            result[i++] = left.result[leftPos++];
+	        while (rightPos < rightSize)
+	            result[i++] = right.result[rightPos++];
+	    }
+
+	    public int size() {
+	        return endPos-startPos;
+	    }
+
+	    @Override
+	    protected void compute() {
+	        if (size() < SEQUENTIAL_THRESHOLD) {
+	            System.arraycopy(numbers, startPos, result, 0, size());
+	            Arrays.sort(result, 0, size(), stringByLength);
+	        }
+	        else {
+	            int midpoint = size() / 2;
+	            MergeSortStringByLength left = new MergeSortStringByLength(numbers, startPos, startPos+midpoint);
+	            MergeSortStringByLength right = new MergeSortStringByLength(numbers, startPos+midpoint, endPos);
+	            invokeAll(left, right);
+	            merge(left, right);
+	        }
+	    }
+	}
+	
 
 }
