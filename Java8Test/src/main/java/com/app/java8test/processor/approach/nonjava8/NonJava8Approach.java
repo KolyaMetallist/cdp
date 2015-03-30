@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.app.java8test.main.CommonConstants;
 import com.app.java8test.processor.approach.Approach;
@@ -45,5 +46,4 @@ public interface NonJava8Approach extends Approach {
 		}
 		return words;
 	}
-
 }

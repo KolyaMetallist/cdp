@@ -1,7 +1,9 @@
 package com.app.java8test.processor.approach.nonjava8;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +13,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.app.java8test.main.CommonConstants;
 
 /**
  * This class implements Non-Java 8 approach for the task "Duplicates"
@@ -23,6 +29,8 @@ import java.util.concurrent.BlockingQueue;
  *
  */
 public class NonJava8Duplicates implements NonJava8Approach {
+	
+	private static final String STOP_THREAD = "STOP_THREAD";
 
 	/**
 	 * Executes the text analyzer task
@@ -41,7 +49,7 @@ public class NonJava8Duplicates implements NonJava8Approach {
 			Map<String, Integer> wordsFrequency = null;
 			
 			if (parallel) {
-				
+				wordsFrequency = frequencyCounterInParallel(file);
 			} else {
 				wordsFrequency = new LinkedHashMap<>();
 				for(String word : this.readWordsFromText(file, parallel)) {
@@ -88,26 +96,85 @@ public class NonJava8Duplicates implements NonJava8Approach {
 								.toUpperCase());
 			}
 			
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
 	
+	/**
+	 * Fill the frequency map using Producer-Consumer Pattern
+	 * 
+	 * @param file - the input file
+	 * @return the map of words and their occurrences 
+	 * @throws IOException
+	 */
+	private Map<String, Integer> frequencyCounterInParallel(File file) throws InterruptedException {
+		Map<String, Integer> wordsFrequency = Collections.synchronizedMap(new LinkedHashMap<>());
+		BlockingQueue<String> queue = new ArrayBlockingQueue<>(1024);
+		Thread producer = new Thread(new Producer(queue, file));
+		Thread consumer = new Thread(new Consumer(queue, wordsFrequency));
+		producer.start();
+		consumer.start();
+		producer.join();
+		consumer.join();
+		return wordsFrequency;
+	}
+	
 	class Producer implements Runnable {
 		
 		private BlockingQueue<String> queue;
-		private List<String> words;
+		private File file;
+		
+		public Producer(BlockingQueue<String> queue, File file) {
+			this.file = file;
+			this.queue = queue;
+		}
 
 		@Override
 		public void run() {	
+			try(BufferedReader bufferReader = Files.newBufferedReader(file.toPath())) {
+				String line = null;
+				while ((line = bufferReader.readLine()) != null){
+					String[] lineWords = line.split(CommonConstants.SPLIT_TEXT_REGEX); 
+					for(String word : lineWords) {
+						if (word.length() > 0) {
+							queue.put(word.toLowerCase());
+						}
+					}
+				}
+				queue.put(STOP_THREAD);
+			} catch (InterruptedException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	class Consumer implements Runnable {
+
+		
+		private BlockingQueue<String> queue;
+		private Map<String, Integer> wordsFrequency;
+		
+		public Consumer(BlockingQueue<String> queue, Map<String, Integer> wordsFrequency) {
+			this.queue = queue;
+			this.wordsFrequency = wordsFrequency;
+		}
+		
+		@Override
+		public void run() {
 			try {
-				for(String word : words){
-					queue.put(word);
+				String word = null;
+				while(!((word = queue.take()).equals(STOP_THREAD))) {
+					if (wordsFrequency.containsKey(word)) {
+						wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
+					} else {
+						wordsFrequency.put(word, 1);
+					}
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}	
 		}
 		
 	}
