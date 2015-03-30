@@ -37,11 +37,13 @@ public class NonJava8Frequency implements NonJava8Approach {
 	public List<?> taskExecution(File file, boolean parallel) {
 		List<Entry<String, Integer>> entryList = new ArrayList<>();
 		try {
+			// put in the map the words and their occurrence 
+			Map<String, Integer> wordsFrequency = null;
+			
 			if (parallel) {
-				entryList = taskExecutionInParallel(file);
+				wordsFrequency = frequencyCounterInParallel(file);
 			} else {
-				// put in the map the words and their occurrence 
-				Map<String, Integer> wordsFrequency = new HashMap<>();
+				wordsFrequency = new HashMap<>();
 				for(String word : this.readWordsFromText(file, parallel)) {
 					if (wordsFrequency.containsKey(word)) {
 						wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
@@ -49,85 +51,64 @@ public class NonJava8Frequency implements NonJava8Approach {
 						wordsFrequency.put(word, 1);
 					}
 				}
-				
-				// create the list of Map.Entry objects
-				entryList.addAll(wordsFrequency.entrySet());
-				
-				// sort the entries by the value descending
-				Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
-	
-					@Override
-					public int compare(Entry<String, Integer> o1,
-							Entry<String, Integer> o2) {
-						return o2.getValue().compareTo(o1.getValue());
-					}
-					
-				});
-				
-				// identify the top index
-				int topIndex = entryList.size() > 1 ? 2 : entryList.size() > 0 ? 1 : 0;
-				
-				// truncate the list
-				entryList = entryList.subList(0, topIndex);
-				
-				// sort the result list by the words descending
-				Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
-	
-					@Override
-					public int compare(Entry<String, Integer> o1,
-							Entry<String, Integer> o2) {
-						return o2.getKey().compareTo(o1.getKey());
-					}
-					
-				});
 			}
+			
+			// create the list of Map.Entry objects
+			entryList.addAll(wordsFrequency.entrySet());
+			
+			// sort the entries by the value descending
+			Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
+
+				@Override
+				public int compare(Entry<String, Integer> o1,
+						Entry<String, Integer> o2) {
+					return o2.getValue().compareTo(o1.getValue());
+				}
+				
+			});
+			
+			// identify the top index
+			int topIndex = entryList.size() > 1 ? 2 : entryList.size() > 0 ? 1 : 0;
+			
+			// truncate the list
+			entryList = entryList.subList(0, topIndex);
+			
+			// sort the result list by the words descending
+			Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
+
+				@Override
+				public int compare(Entry<String, Integer> o1,
+						Entry<String, Integer> o2) {
+					return o2.getKey().compareTo(o1.getKey());
+				}
+				
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return entryList;
 	}
 
-	private List<Entry<String, Integer>> taskExecutionInParallel(File file) throws IOException {
-		List<Entry<String, Integer>> entryList = new CopyOnWriteArrayList<>();
-		
+	/**
+	 * Fill the frequency map using Fork/Join Framework
+	 * 
+	 * @param file - the input file
+	 * @return the map of words and their occurrences 
+	 * @throws IOException
+	 */
+	private Map<String, Integer> frequencyCounterInParallel(File file) throws IOException {	
 		ForkJoinPool pool = new ForkJoinPool();
 		Map<String, Integer> wordsFrequency = new ConcurrentHashMap<>();
 		pool.invoke(new ForkJoinFrequencyReader(Collections.synchronizedList(this.readWordsFromText(file, true)), wordsFrequency));
 		
-		// create the list of Map.Entry objects
-		entryList.addAll(wordsFrequency.entrySet());
-		
-		// sort the entries by the value descending
-		Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
-
-			@Override
-			public int compare(Entry<String, Integer> o1,
-					Entry<String, Integer> o2) {
-				return o2.getValue().compareTo(o1.getValue());
-			}
-			
-		});
-		
-		// identify the top index
-		int topIndex = entryList.size() > 1 ? 2 : entryList.size() > 0 ? 1 : 0;
-		
-		// truncate the list
-		entryList = entryList.subList(0, topIndex);
-		
-		// sort the result list by the words descending
-		Collections.sort(entryList, new Comparator<Entry<String, Integer>>(){
-
-			@Override
-			public int compare(Entry<String, Integer> o1,
-					Entry<String, Integer> o2) {
-				return o2.getKey().compareTo(o1.getKey());
-			}
-			
-		});
-		
-		return entryList;
+		return wordsFrequency;
 	}
 	
+	/**
+	 * This inner class provides the implementation of the interface RecusrsiveAction 
+	 * to process the list of words to map in parallel threads
+	 *
+	 */
 	class ForkJoinFrequencyReader extends RecursiveAction {
 		
 		static final int SEQUENTIAL_THRESHOLD = 1000;
@@ -149,13 +130,15 @@ public class NonJava8Frequency implements NonJava8Approach {
 			this.wordsFrequency = wordsFrequency;
 		}
 		
-		private synchronized void putInMap() {
-			for(int i = start; i < end; i++) {
-				String word = words.get(i);
-				if (wordsFrequency.containsKey(word)) {
-					wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
-				} else {
-					wordsFrequency.put(word, 1);
+		private void putInMap() {
+			synchronized (wordsFrequency) {
+				for(int i = start; i < end; i++) {
+					String word = words.get(i);
+					if (wordsFrequency.containsKey(word)) {
+						wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
+					} else {
+						wordsFrequency.put(word, 1);
+					}
 				}
 			}
 		}
@@ -166,12 +149,8 @@ public class NonJava8Frequency implements NonJava8Approach {
 				putInMap();
 			} else {
 				int mid = (start + end) >>> 1;
-				ForkJoinFrequencyReader left = new ForkJoinFrequencyReader(words, start, mid, wordsFrequency);
-				ForkJoinFrequencyReader right =	new ForkJoinFrequencyReader(words, mid, end, wordsFrequency);
-				left.fork();
-				right.fork();
-				left.join();
-				right.join();
+				invokeAll(new ForkJoinFrequencyReader(words, start, mid, wordsFrequency),
+							new ForkJoinFrequencyReader(words, mid, end, wordsFrequency));
 			}
 		}
 		

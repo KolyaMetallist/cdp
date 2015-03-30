@@ -31,14 +31,15 @@ public interface NonJava8Approach extends Approach {
 	 * @see com.app.java8test.processor.approach.Approach#readWordsFromText(java.io.File, boolean)
 	 */
 	default List<String> readWordsFromText(File file, boolean parallel) throws IOException{
-		BufferedReader bufferReader = Files.newBufferedReader(file.toPath());
 		List<String> words = new ArrayList<>();
-		String line = null;
-		while ((line = bufferReader.readLine()) != null){
-			String[] lineWords = line.split(CommonConstants.SPLIT_TEXT_REGEX); 
-			for(String word : lineWords) {
-				if (word.length() > 0) {
-					words.add(word.toLowerCase());
+		try(BufferedReader bufferReader = Files.newBufferedReader(file.toPath())) {
+			String line = null;
+			while ((line = bufferReader.readLine()) != null){
+				String[] lineWords = line.split(CommonConstants.SPLIT_TEXT_REGEX); 
+				for(String word : lineWords) {
+					if (word.length() > 0) {
+						words.add(word.toLowerCase());
+					}
 				}
 			}
 		}
