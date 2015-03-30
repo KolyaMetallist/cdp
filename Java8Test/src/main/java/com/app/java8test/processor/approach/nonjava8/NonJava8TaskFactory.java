@@ -3,7 +3,6 @@ package com.app.java8test.processor.approach.nonjava8;
 import com.app.java8test.main.ProcessCommandEnum;
 import com.app.java8test.processor.approach.AbstractApproachTaskFactory;
 import com.app.java8test.processor.approach.Approach;
-import com.app.java8test.processor.approach.java8.Java8Frequency;
 
 /**
  * This factory provides the instance of Approach implementation
