@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * This class implements Non-Java 8 approach for the task "Duplicates"
@@ -37,12 +38,18 @@ public class NonJava8Duplicates implements NonJava8Approach {
 		List<String> list = new ArrayList<>();	
 		try {
 			// put in the map the words and their occurrence 
-			Map<String, Integer> wordsFrequency = new LinkedHashMap<>();
-			for(String word : this.readWordsFromText(file, parallel)) {
-				if (wordsFrequency.containsKey(word)) {
-					wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
-				} else {
-					wordsFrequency.put(word, 1);
+			Map<String, Integer> wordsFrequency = null;
+			
+			if (parallel) {
+				
+			} else {
+				wordsFrequency = new LinkedHashMap<>();
+				for(String word : this.readWordsFromText(file, parallel)) {
+					if (wordsFrequency.containsKey(word)) {
+						wordsFrequency.put(word, wordsFrequency.get(word).intValue() + 1);
+					} else {
+						wordsFrequency.put(word, 1);
+					}
 				}
 			}
 			
@@ -85,6 +92,24 @@ public class NonJava8Duplicates implements NonJava8Approach {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	class Producer implements Runnable {
+		
+		private BlockingQueue<String> queue;
+		private List<String> words;
+
+		@Override
+		public void run() {	
+			try {
+				for(String word : words){
+					queue.put(word);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }
