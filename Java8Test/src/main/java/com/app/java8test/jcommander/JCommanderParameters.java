@@ -21,7 +21,7 @@ public class JCommanderParameters {
 	private File file;
 	
 	@Parameter(names = {"-t", "--task"},
-			description = "Process task",
+			description = "Process task: frequency, length or duplicates",
 			converter = ProcessCommandConverter.class,
 			required = true)
 	private ProcessCommandEnum task;
