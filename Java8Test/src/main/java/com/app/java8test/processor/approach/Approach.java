@@ -15,10 +15,18 @@ public interface Approach {
 	 * 
 	 * @param file - the input file
 	 * @param flag - the flag for single/multi threading
-	 * @return list of words
+	 * @return list of objects
 	 */
 	List<?> taskExecution(File file, boolean parallel);
 	
+	/**
+	 * Reads the words from the input file into the list of words
+	 * 
+	 * @param file - the input file
+	 * @param parallel - the flag for single/multi threading
+	 * @return list of words
+	 * @throws IOException
+	 */
 	List<String> readWordsFromText(File file, boolean parallel) throws IOException;
 
 }

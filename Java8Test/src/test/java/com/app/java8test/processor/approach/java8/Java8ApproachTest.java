@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.ArrayComparisonFailure;
 
 import com.app.java8test.AbstractApproachTest;
 
@@ -38,7 +39,19 @@ public class Java8ApproachTest extends AbstractApproachTest{
 			
 		};
 	}
+	
+	/**
+	 * Check if the test input file exists
+	 */
+	@Test
+	public void testFile() {
+		assertTrue(getFile().exists());
+	}
 
+	/**
+	 * Test method for {@link com.app.java8test.processor.approach.java8.Java8Approach#readWordsFromText(java.io.File, boolean)}.
+	 * @throws IOException 
+	 */
 	@Test
 	public void testReadWordsFromText() throws IOException {
 		assertArrayEquals("should be same", approach.readWordsFromText(getFile(), false).toArray(), getExpectedWords().toArray());
