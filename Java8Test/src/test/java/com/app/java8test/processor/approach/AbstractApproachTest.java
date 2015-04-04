@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.app.java8test;
+package com.app.java8test.processor.approach;
 
 import java.io.File;
 import java.util.AbstractMap;

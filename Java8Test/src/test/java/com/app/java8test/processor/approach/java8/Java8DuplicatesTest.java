@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.app.java8test.AbstractApproachTest;
+import com.app.java8test.processor.approach.AbstractApproachTest;
 
 /**
  * Test class for Java8Duplicates

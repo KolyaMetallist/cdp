@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.ArrayComparisonFailure;
 
-import com.app.java8test.AbstractApproachTest;
+import com.app.java8test.processor.approach.AbstractApproachTest;
 
 /**
  * Test class for Java8Approach
