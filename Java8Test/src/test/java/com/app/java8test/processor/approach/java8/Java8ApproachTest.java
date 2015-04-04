@@ -3,7 +3,8 @@
  */
 package com.app.java8test.processor.approach.java8;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.ArrayComparisonFailure;
 
 import com.app.java8test.processor.approach.AbstractApproachTest;
 
