@@ -1,0 +1,147 @@
+Results of all 3 tasks done over input.txt file 
+
+1. Find the most two frequent words and print them out sorted alphabetically in a reversed order. (Task name: frequency).
+
+Command: frequency
+Approach: Java8
+Parallel: false
+
+sed=15768
+in=12240
+
+Elapsed time: 2536 ms
+
+*********************
+
+Command: frequency
+Approach: Java8
+Parallel: true
+
+sed=15768
+in=12240
+
+Elapsed time: 2280 ms
+
+*********************
+
+Command: frequency
+Approach: NonJava8
+Parallel: false
+
+sed=15768
+in=12240
+
+Elapsed time: 2312 ms
+
+*********************
+
+Command: frequency
+Approach: NonJava8
+Parallel: true
+
+sed=15768
+in=12240
+
+Elapsed time: 2223 ms
+
+
+2. Find first three longest words and print this words along with the their length sorted them in a descend order by the total number of letters each word contains (task name: length) 
+
+Command: length
+Approach: Java8
+Parallel: false
+
+pellentesque=12
+sollicitudin=12
+ullamcorper=11
+
+Elapsed time: 2229 ms
+
+*********************
+
+Command: length
+Approach: Java8
+Parallel: true
+
+pellentesque=12
+sollicitudin=12
+ullamcorper=11
+
+Elapsed time: 1405 ms
+
+*********************
+
+Command: length
+Approach: NonJava8
+Parallel: false
+
+pellentesque=12
+sollicitudin=12
+ullamcorper=11
+
+Elapsed time: 2174 ms
+
+*********************
+
+Command: length
+Approach: NonJava8
+Parallel: true
+
+pellentesque=12
+sollicitudin=12
+ullamcorper=11
+
+Elapsed time: 1833 ms
+
+3. Find first three words which have duplicates and print them inversely (e.g. map -> pam) in the upper case sorted by length in ascending order. (task name: duplicates)
+
+Command: duplicates
+Approach: Java8
+Parallel: false
+
+MEROL
+MUSPI
+ROLOD
+
+Elapsed time: 2256 ms
+
+*********************
+
+Command: duplicates
+Approach: Java8
+Parallel: true
+
+MEROL
+MUSPI
+ROLOD
+
+Elapsed time: 2190 ms
+
+*********************
+
+Command: duplicates
+Approach: NonJava8
+Parallel: false
+
+MEROL
+MUSPI
+ROLOD
+
+Elapsed time: 2098 ms
+
+*********************
+
+Command: duplicates
+Approach: NonJava8
+Parallel: true
+
+MEROL
+MUSPI
+ROLOD
+
+Elapsed time: 1118 ms
+
+
+Conclusions: On the whole the tasks' execution is faster in parallel threads. The most efficient implementaion was done for Non-Java8 "duplicates", 
+because it is based on Producer-Consumer pattern with the BlockingQueue. Java8 single-thread implementaions have been turned out slower than Non-Java8 ones. 
+
