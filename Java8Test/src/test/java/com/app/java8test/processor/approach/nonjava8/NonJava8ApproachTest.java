@@ -16,7 +16,7 @@ import org.junit.internal.ArrayComparisonFailure;
 import com.app.java8test.processor.approach.AbstractApproachTest;
 
 /**
- * @author Mykola_Bazhenov
+ * Test class for NonJava8Approach
  *
  */
 public class NonJava8ApproachTest extends AbstractApproachTest{
