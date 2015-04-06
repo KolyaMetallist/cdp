@@ -11,7 +11,7 @@ public class ConcurrencyMain
 {
     public static void main( String[] args ) throws InterruptedException {
     	
-    	int values[] = createRandomArray(8192000);
+    	int values[] = createRandomArray(1000);
     	int values2[] = values.clone();
     	int values3[] = values.clone();
     	
@@ -28,7 +28,7 @@ public class ConcurrencyMain
     	//Arrays.stream(values).forEach(a -> System.out.print(a + " "));
     	System.out.println("\nElapsed time: " + elapsedTime + " ms\n");
     	
-    	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
+    	Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
     	
     	int cores = Runtime.getRuntime().availableProcessors(); 
     	//cores = 8;
@@ -39,7 +39,7 @@ public class ConcurrencyMain
     	elapsedTime = System.currentTimeMillis() - tStart;
     	
     	System.out.println("\nAfter parallel sorting:");
-    	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
+    	Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
     	System.out.println("\n" + cores + " threads. Elapsed time: " + elapsedTime + " ms\n");
     	
     	//Arrays.stream(values3).forEach(a -> System.out.print(a + " "));

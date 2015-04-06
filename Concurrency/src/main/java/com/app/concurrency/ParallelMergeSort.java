@@ -13,13 +13,14 @@ public class ParallelMergeSort implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		parallelMergeSort();
 	}
 	
-	public void parallelMergeSort() {
+	public synchronized void parallelMergeSort() {
 		if (threadCount <= 1) {
 			mergeSort(values);
+			notify();
 		} else if (values.length >= 2) {
 			// split array in half
 			int[] left  = Arrays.copyOfRange(values, 0, values.length / 2);
@@ -33,11 +34,15 @@ public class ParallelMergeSort implements Runnable {
 			lThread.start();
 			rThread.start();
 			
-			try {
+			/*try {
 				lThread.join();
 				rThread.join();
-			} catch (InterruptedException ie) {}
-			
+			} catch (InterruptedException ie) {}*/
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			// merge them back together
 			merge(left, right, values);
 		}
