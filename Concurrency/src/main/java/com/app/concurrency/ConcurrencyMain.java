@@ -9,15 +9,48 @@ import java.util.Random;
  */
 public class ConcurrencyMain 
 {
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws InterruptedException {
     	
-    	int values[] = createRandomArray(1000);
+    	int values[] = createRandomArray(8192000);
+    	int values2[] = values.clone();
+    	int values3[] = values.clone();
     	
-    	Arrays.stream(values).forEach(a -> System.out.print(a + " "));
+    	System.out.println("Array size = " + values.length);
+    	
+    	//Arrays.stream(values).forEach(a -> System.out.print(a + " "));
+    	
+    	long tStart = System.currentTimeMillis();
     	SingleMergeSort singleSorter = new SingleMergeSort(values);
     	singleSorter.sort();
-    	System.out.println("\n After sorting:");
-    	Arrays.stream(values).forEach(a -> System.out.print(a + " "));
+    	long elapsedTime = System.currentTimeMillis() - tStart;
+		
+    	System.out.println("\nAfter sorting:");
+    	//Arrays.stream(values).forEach(a -> System.out.print(a + " "));
+    	System.out.println("\nElapsed time: " + elapsedTime + " ms\n");
+    	
+    	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
+    	
+    	int cores = Runtime.getRuntime().availableProcessors(); 
+    	//cores = 8;
+    	tStart = System.currentTimeMillis();
+    	Thread parallelSorter = new Thread(new ParallelMergeSort(values2, cores));
+    	parallelSorter.start();
+    	parallelSorter.join();
+    	elapsedTime = System.currentTimeMillis() - tStart;
+    	
+    	System.out.println("\nAfter parallel sorting:");
+    	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
+    	System.out.println("\n" + cores + " threads. Elapsed time: " + elapsedTime + " ms\n");
+    	
+    	//Arrays.stream(values3).forEach(a -> System.out.print(a + " "));
+    	
+    	tStart = System.currentTimeMillis();
+    	ParallelMergeSort2.parallelMergeSort(values3, cores);
+    	elapsedTime = System.currentTimeMillis() - tStart;
+    	
+    	System.out.println("\nAfter parallel static sorting:");
+    	//Arrays.stream(values3).forEach(a -> System.out.print(a + " "));
+    	System.out.println("\n" + cores + " threads. Elapsed time: " + elapsedTime + " ms");
     }
     
     public static int[] createRandomArray(int length) {
