@@ -21,31 +21,37 @@ public class ParallelMergeSort2 {
 				int[] left  = Arrays.copyOfRange(a, 0, a.length / 2);
 				int[] right = Arrays.copyOfRange(a, a.length / 2, a.length);
 				
+				// sort the halves
+				// mergeSort(left);
+				// mergeSort(right);
 				synchronized(left) {
-					synchronized(right) {
-						// sort the halves
-						// mergeSort(left);
-						// mergeSort(right);
-						Thread lThread = new Thread(new Sorter(left,  threadCount / 2));
-						Thread rThread = new Thread(new Sorter(right, threadCount / 2));
-						lThread.start();
-						rThread.start();
-						
-						/*try {
-							lThread.join();
-							rThread.join();
-						} catch (InterruptedException ie) {}*/
-						try {
-							left.wait();
-							right.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						
-						// merge them back together
-						merge(left, right, a);
+					Thread lThread = new Thread(new Sorter(left,  threadCount / 2));
+					lThread.start();
+					try {
+						left.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
+				
+				synchronized(right) {
+					Thread rThread = new Thread(new Sorter(right, threadCount / 2));
+					rThread.start();
+					try {
+						right.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				/*try {
+					lThread.join();
+					rThread.join();
+				} catch (InterruptedException ie) {}*/
+				
+				
+				// merge them back together
+				merge(left, right, a);
+
 				a.notify();
 			}
 		}

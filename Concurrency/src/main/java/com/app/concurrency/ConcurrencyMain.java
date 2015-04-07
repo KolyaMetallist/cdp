@@ -11,7 +11,7 @@ public class ConcurrencyMain
 {
     public static void main( String[] args ) throws InterruptedException {
     	
-    	int values[] = createRandomArray(1024000);
+    	int values[] = createRandomArray(32768000);
     	int values2[] = values.clone();
     	int values3[] = values.clone();
     	
@@ -31,7 +31,7 @@ public class ConcurrencyMain
     	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
     	
     	int cores = Runtime.getRuntime().availableProcessors(); 
-    	//cores = 8;
+    	cores = 8;
     	tStart = System.currentTimeMillis();
     	Thread parallelSorter = new Thread(new ParallelMergeSort(values2, cores));
     	parallelSorter.start();
