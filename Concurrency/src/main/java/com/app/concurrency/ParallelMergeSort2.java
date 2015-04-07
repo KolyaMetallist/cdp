@@ -12,48 +12,29 @@ import java.util.Arrays;
 public class ParallelMergeSort2 {
 
 	public static void parallelMergeSort(int[] a, int threadCount) {
-		synchronized(a) {
-			if (threadCount <= 1) {
-				mergeSort(a);
-				a.notify();
-			} else if (a.length >= 2) {
-				// split array in half
-				int[] left  = Arrays.copyOfRange(a, 0, a.length / 2);
-				int[] right = Arrays.copyOfRange(a, a.length / 2, a.length);
-				
-				// sort the halves
-				// mergeSort(left);
-				// mergeSort(right);
-				synchronized(left) {
-					Thread lThread = new Thread(new Sorter(left,  threadCount / 2));
-					lThread.start();
-					try {
-						left.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				synchronized(right) {
-					Thread rThread = new Thread(new Sorter(right, threadCount / 2));
-					rThread.start();
-					try {
-						right.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				/*try {
-					lThread.join();
-					rThread.join();
-				} catch (InterruptedException ie) {}*/
-				
-				
-				// merge them back together
-				merge(left, right, a);
-
-				a.notify();
-			}
+		if (threadCount <= 1) {
+			mergeSort(a);
+		} else if (a.length >= 2) {
+			// split array in half
+			int[] left  = Arrays.copyOfRange(a, 0, a.length / 2);
+			int[] right = Arrays.copyOfRange(a, a.length / 2, a.length);
+			
+			// sort the halves
+			// mergeSort(left);
+			// mergeSort(right);
+			Thread lThread = new Thread(new Sorter(left,  threadCount / 2));
+			Thread rThread = new Thread(new Sorter(right, threadCount / 2));
+			lThread.start();
+			rThread.start();
+			
+			try {
+				lThread.join();
+				rThread.join();
+			} catch (InterruptedException ie) {}
+			
+			
+			// merge them back together
+			merge(left, right, a);
 		}
 	}
 	

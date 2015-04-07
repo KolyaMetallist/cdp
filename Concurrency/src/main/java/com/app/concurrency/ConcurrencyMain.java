@@ -11,7 +11,7 @@ public class ConcurrencyMain
 {
     public static void main( String[] args ) throws InterruptedException {
     	
-    	int values[] = createRandomArray(32768000);
+    	int values[] = createRandomArray(8192000);
     	int values2[] = values.clone();
     	int values3[] = values.clone();
     	
@@ -31,14 +31,14 @@ public class ConcurrencyMain
     	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
     	
     	int cores = Runtime.getRuntime().availableProcessors(); 
-    	cores = 8;
+    	//cores = 8;
     	tStart = System.currentTimeMillis();
     	Thread parallelSorter = new Thread(new ParallelMergeSort(values2, cores));
     	parallelSorter.start();
     	parallelSorter.join();
     	elapsedTime = System.currentTimeMillis() - tStart;
     	
-    	System.out.println("\nAfter parallel sorting:");
+    	System.out.println("\nAfter parallel sorting with wait/notify synchronization:");
     	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
     	System.out.println("\n" + cores + " threads. Elapsed time: " + elapsedTime + " ms\n");
     	
@@ -48,7 +48,7 @@ public class ConcurrencyMain
     	ParallelMergeSort2.parallelMergeSort(values3, cores);
     	elapsedTime = System.currentTimeMillis() - tStart;
     	
-    	System.out.println("\nAfter parallel static sorting:");
+    	System.out.println("\nAfter parallel static sorting with a fork/join concept:");
     	//Arrays.stream(values3).forEach(a -> System.out.print(a + " "));
     	System.out.println("\n" + cores + " threads. Elapsed time: " + elapsedTime + " ms");
     }
