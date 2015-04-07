@@ -13,38 +13,46 @@ public class ParallelMergeSort implements Runnable {
 	}
 
 	@Override
-	public synchronized void run() {
+	public void run() {
 		parallelMergeSort();
 	}
 	
-	public synchronized void parallelMergeSort() {
-		if (threadCount <= 1) {
-			mergeSort(values);
-			notify();
-		} else if (values.length >= 2) {
-			// split array in half
-			int[] left  = Arrays.copyOfRange(values, 0, values.length / 2);
-			int[] right = Arrays.copyOfRange(values, values.length / 2, values.length);
-			
-			// sort the halves
-			// mergeSort(left);
-			// mergeSort(right);
-			Thread lThread = new Thread(new ParallelMergeSort(left,  threadCount / 2));
-			Thread rThread = new Thread(new ParallelMergeSort(right, threadCount / 2));
-			lThread.start();
-			rThread.start();
-			
-			/*try {
-				lThread.join();
-				rThread.join();
-			} catch (InterruptedException ie) {}*/
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	public void parallelMergeSort() {
+		synchronized (values) {
+			if (threadCount <= 1) {
+				mergeSort(values);
+				values.notify();
+			} else if (values.length >= 2) {
+				// split array in half
+				int[] left  = Arrays.copyOfRange(values, 0, values.length / 2);
+				int[] right = Arrays.copyOfRange(values, values.length / 2, values.length);
+				
+				synchronized(left) {
+					synchronized (right) {
+						// sort the halves
+						// mergeSort(left);
+						// mergeSort(right);
+						Thread lThread = new Thread(new ParallelMergeSort(left,  threadCount / 2));
+						Thread rThread = new Thread(new ParallelMergeSort(right, threadCount / 2));
+						lThread.start();
+						rThread.start();
+						
+						/*try {
+							lThread.join();
+							rThread.join();
+						} catch (InterruptedException ie) {}*/
+						try {
+							left.wait();
+							right.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						// merge them back together
+						merge(left, right, values);
+					}
+				}
+				values.notify();
 			}
-			// merge them back together
-			merge(left, right, values);
 		}
 	}
 	
