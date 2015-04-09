@@ -7,11 +7,19 @@ import java.util.Random;
  * The main concurrency lab class
  *
  */
-public class ConcurrencyMain 
-{
+public class ConcurrencyMain {
+	
+	/**
+	 * From this reference {@link https://antimatroid.wordpress.com/2012/12/01/parallel-merge-sort-in-java/}
+	 * it was concluded that the threshold for sequential merge is more effective than parallel 
+	 * when size > 1024 array items
+	 */
+	private static final int THRESHOLD = 1024;
+	
     public static void main( String[] args ) throws InterruptedException {
     	
     	final int arraySize = 8192000;
+    	
     	
     	int values[] = createRandomArray(arraySize);
     	int values2[] = values.clone();
@@ -34,7 +42,7 @@ public class ConcurrencyMain
     	//*************************************************
     	// Multi thread sorting with wait/notify
     	//Arrays.stream(values2).forEach(a -> System.out.print(a + " "));
-    	int cores = getSortThreads();
+    	int cores = getSortThreads(arraySize);
     	tStart = System.currentTimeMillis();
     	Thread parallelSorter = new Thread(new ParallelMergeSort(values2, cores));
     	parallelSorter.start();
@@ -77,9 +85,11 @@ public class ConcurrencyMain
      * 
      * @return the thread count
      */
-    public static int getSortThreads() {
+    public static int getSortThreads(int length) {
+    	//int cores = length > (THRESHOLD*2) ? length / (THRESHOLD*2) : 1; 
+    	// decided to use core count. Link http://faculty.ycp.edu/~dhovemey/spring2011/cs365/lecture/lecture18.html
     	int cores = Runtime.getRuntime().availableProcessors(); 
-    	//cores = 8;
+    	// cores = 8;
     	return cores;
     }
 }

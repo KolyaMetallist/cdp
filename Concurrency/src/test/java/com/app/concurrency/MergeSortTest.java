@@ -28,7 +28,7 @@ public class MergeSortTest {
 	@Before
 	public void setUp() throws Exception {
 		numbers = ConcurrencyMain.createRandomArray(arraySize);
-	    threadCount = ConcurrencyMain.getSortThreads();
+	    threadCount = ConcurrencyMain.getSortThreads(arraySize);
 	}
 	
 	/**
