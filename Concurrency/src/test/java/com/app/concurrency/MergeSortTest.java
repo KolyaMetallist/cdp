@@ -31,6 +31,11 @@ public class MergeSortTest {
 	    threadCount = ConcurrencyMain.getSortThreads();
 	}
 	
+	/**
+	 * Checks if the current array is sorted, if not throws assert fail
+	 * 
+	 * @param array - the array to be checked
+	 */
 	private void testArraySorted(int[] array) {
 		for (int i = 0; i < numbers.length - 1; i++) {
 			if (numbers[i] > numbers[i + 1]) {
@@ -40,6 +45,9 @@ public class MergeSortTest {
 		assertTrue(true);
 	}
 
+	/**
+	 *  Tests the single thread implementation {@link SingleMergeSort}
+	 */
 	@Test
 	public void test1SingleThreadSort() {
 		long tStart = System.currentTimeMillis();
@@ -52,6 +60,9 @@ public class MergeSortTest {
     	System.out.println("Single thread sorting test. Elapsed time is " + elapsedTime + " ms\n");
 	}
 	
+	/**
+	 *  Tests the single thread implementation {@link ParallelMergeSort}
+	 */
 	@Test
 	public void test2MultiThreadWaitNotifySort() throws InterruptedException {
 		long tStart = System.currentTimeMillis();
@@ -65,6 +76,9 @@ public class MergeSortTest {
     	System.out.println("Multi thread with wait/notify sorting test. " + threadCount + " Threads. Elapsed time is " + elapsedTime + " ms\n");
 	}
 	
+	/**
+	 *  Tests the single thread implementation {@link ParallelMergeSort2}
+	 */
 	@Test
 	public void test3MultiThreadForkJoinSort() throws InterruptedException {
 		long tStart = System.currentTimeMillis();

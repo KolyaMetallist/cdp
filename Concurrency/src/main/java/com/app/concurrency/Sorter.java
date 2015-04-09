@@ -1,5 +1,9 @@
 package com.app.concurrency;
 
+/**
+ * The wrapper to launch the merge sorting in the separate thread
+ *
+ */
 public class Sorter implements Runnable {
 	
 	private int[] a;

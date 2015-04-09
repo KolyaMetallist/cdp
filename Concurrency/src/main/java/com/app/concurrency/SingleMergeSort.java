@@ -1,5 +1,9 @@
 package com.app.concurrency;
 
+/**
+ * This class implements the merge sort algorithm in a single thread
+ *
+ */
 public class SingleMergeSort {
 	
 	private int[] values;
@@ -10,10 +14,20 @@ public class SingleMergeSort {
 		result = new int[values.length];
 	}
 	
+	/**
+	 * Sorts the input array
+	 */
 	public void sort() {
 		mergeSort(0, values.length - 1);
 	}
 	
+	/**
+	 * Provides merge sorting algorithm by splitting the array, sorts the parts,
+	 * and merges them into the final result
+	 * 
+	 * @param low - the begin index
+	 * @param high - the end index
+	 */
 	private void mergeSort(int low, int high) {
 	    // check if low is smaller then high, if not then the array is sorted
 	    if (low < high) {
@@ -28,6 +42,14 @@ public class SingleMergeSort {
 	    }
 	}
 
+	/**
+	 * Merges the sorted parts into the array
+	 * through a temporary array
+	 * 
+	 * @param low - the begin index
+	 * @param middle - the middle index
+	 * @param high - the end index
+	 */
 	private void merge(int low, int middle, int high) {
 	    // Copy both parts into the helper array
 	    for (int i = low; i <= high; i++) {

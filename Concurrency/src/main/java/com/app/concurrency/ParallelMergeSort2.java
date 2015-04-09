@@ -6,11 +6,15 @@ package com.app.concurrency;
 import java.util.Arrays;
 
 /**
- * 
+ * This class implements the merge sort algorithm using fork/join concept for synchronization
  *
  */
 public class ParallelMergeSort2 {
 
+	/**
+	 *  The main sorting method, defines either to continue the array splitting in parallel,
+	 *  or to split it within the current thread
+	 */
 	public static void parallelMergeSort(int[] a, int threadCount) {
 		if (threadCount <= 1) {
 			mergeSort(a);
@@ -38,10 +42,14 @@ public class ParallelMergeSort2 {
 		}
 	}
 	
-	// Arranges the elements of the given array into sorted order
-	// using the "merge sort" algorithm, which splits the array in half,
-	// recursively sorts the halves, then merges the sorted halves.
-	// It is O(N log N) for all inputs.
+	/** 
+	 * Arranges the elements of the given array into sorted order
+	 * using the "merge sort" algorithm, which splits the array in half,
+	 * recursively sorts the halves, then merges the sorted halves.
+	 * It is O(N log N) for all inputs.
+	 * 
+	 * @param a - the array to be sorted
+	 */
 	public static void mergeSort(int[] a) {
 		if (a.length >= 2) {
 			// split array in half
@@ -57,8 +65,14 @@ public class ParallelMergeSort2 {
 		}
 	}
 	
-	// Combines the contents of sorted left/right arrays into output array a.
-	// Assumes that left.length + right.length == a.length.
+	/** 
+	 * Combines the contents of sorted left/right arrays into output array a.
+	 * Assumes that left.length + right.length == a.length.
+	 * 
+	 * @param left - the left part of the array
+	 * @param right - the rigth part of the array
+	 * @param a - the result array
+	 */
 	public static void merge(int[] left, int[] right, int[] a) {
 		int i1 = 0;
 		int i2 = 0;
