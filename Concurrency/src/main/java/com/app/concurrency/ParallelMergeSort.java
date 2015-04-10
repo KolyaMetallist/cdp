@@ -46,16 +46,12 @@ public class ParallelMergeSort implements Runnable {
 			// Refers to the Thread.join() implementation 
 			try {
 				synchronized (lThread) {
-					while (true) {
-						if (!(lThread.isAlive()))
-							break;
+					while (lThread.isAlive()) {
 						lThread.wait(0L);
 					}
 				}
 				synchronized (rThread) {
-					while (true) {
-						if (!(rThread.isAlive()))
-							break;
+					while (rThread.isAlive()) {
 						rThread.wait(0L);
 					}
 				}
