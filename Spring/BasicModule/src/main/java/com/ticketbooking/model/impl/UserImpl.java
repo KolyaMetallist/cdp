@@ -9,27 +9,10 @@ import com.ticketbooking.model.User;
  * @author Mykola_Bazhenov
  *
  */
-public class UserImpl implements User {
+public class UserImpl extends AbstractEntity implements User {
 	
-	private long id;
 	private String name;
 	private String email;
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.User#getId()
-	 */
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.User#setId(long)
-	 */
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.model.User#getName()

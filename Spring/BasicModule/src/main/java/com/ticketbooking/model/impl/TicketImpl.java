@@ -9,29 +9,12 @@ import com.ticketbooking.model.Ticket;
  * @author Mykola_Bazhenov
  *
  */
-public class TicketImpl implements Ticket {
+public class TicketImpl extends AbstractEntity implements Ticket {
 	
-	private long id;
 	private long eventId;
 	private long userId;
 	private Category category;
 	private int place;
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.Ticket#getId()
-	 */
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.Ticket#setId(long)
-	 */
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.model.Ticket#getEventId()

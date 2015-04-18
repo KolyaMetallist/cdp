@@ -11,27 +11,10 @@ import com.ticketbooking.model.Event;
  * Implementation for Event
  *
  */
-public class EventImpl implements Event {
+public class EventImpl extends AbstractEntity implements Event {
 	
-	private long id;
 	private String title;
 	private Date date;
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.Event#getId()
-	 */
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.model.Event#setId(long)
-	 */
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.model.Event#getTitle()

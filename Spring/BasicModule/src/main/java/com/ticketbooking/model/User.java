@@ -1,15 +1,10 @@
 package com.ticketbooking.model;
 
 /**
- * Created by maksym_govorischev on 14/03/14.
+ * User entity
  */
-public interface User {
-    /**
-     * User Id. UNIQUE.
-     * @return User Id.
-     */
-    long getId();
-    void setId(long id);
+public interface User extends Entity {
+
     String getName();
     void setName(String name);
 

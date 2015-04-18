@@ -1,17 +1,11 @@
 package com.ticketbooking.model;
 
 /**
- * Created by maksym_govorischev.
+ * Ticket entity
  */
-public interface Ticket {
+public interface Ticket extends Entity {
     public enum Category {STANDARD, PREMIUM, BAR}
 
-    /**
-     * Ticket Id. UNIQUE.
-     * @return Ticket Id.
-     */
-    long getId();
-    void setId(long id);
     long getEventId();
     void setEventId(long eventId);
     long getUserId();

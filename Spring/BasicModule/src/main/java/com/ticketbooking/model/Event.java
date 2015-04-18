@@ -3,15 +3,10 @@ package com.ticketbooking.model;
 import java.util.Date;
 
 /**
- * Created by maksym_govorischev.
+ * Event Entity
  */
-public interface Event {
-    /**
-     * Event id. UNIQUE.
-     * @return Event Id
-     */
-    long getId();
-    void setId(long id);
+public interface Event extends Entity {
+    
     String getTitle();
     void setTitle(String title);
     Date getDate();

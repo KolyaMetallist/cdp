@@ -3,14 +3,17 @@
  */
 package com.ticketbooking.dao;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.ticketbooking.model.Entity;
 
 /**
  * Generic interface for CRUD operations 
  *
  */
-public interface Dao<E> {
+public interface Dao<E extends Entity> {
 	
 	/**
 	 * Creates a new entity object in a storage
@@ -61,6 +64,6 @@ public interface Dao<E> {
 				.getAll()
 				.stream()
 				.sorted()
-				.collect(Collectors.toList());
+				.collect(toList());
 	}
 }
