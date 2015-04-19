@@ -9,7 +9,6 @@ import java.util.List;
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Event;
-import com.ticketbooking.model.User;
 import com.ticketbooking.service.EventService;
 
 /**
