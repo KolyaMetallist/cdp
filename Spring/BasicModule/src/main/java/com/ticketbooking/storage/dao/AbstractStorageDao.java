@@ -28,9 +28,7 @@ public abstract class AbstractStorageDao<E extends Entity> implements Dao<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E create(E entity) {
-		if (entity.getId() == 0) {
-			entity.setId(nextId());
-		}
+		entity.setId(nextId());
 		return (E) storage.put(Functions.composeId.apply(entity), entity);
 	}
 

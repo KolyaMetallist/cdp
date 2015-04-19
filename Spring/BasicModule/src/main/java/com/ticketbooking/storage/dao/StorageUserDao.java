@@ -1,14 +1,12 @@
 package com.ticketbooking.storage.dao;
 
-import java.util.List;
 import static java.util.stream.Collectors.toList;
 
+import java.util.List;
+
 import com.ticketbooking.dao.model.UserDao;
-import com.ticketbooking.model.Entity;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.impl.UserImpl;
-import com.ticketbooking.storage.Storage;
-import com.ticketbooking.storage.impl.MapStorage;
 
 public class StorageUserDao extends AbstractStorageDao<User> implements UserDao {
 
