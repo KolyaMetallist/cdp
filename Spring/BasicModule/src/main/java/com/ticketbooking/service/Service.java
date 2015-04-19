@@ -10,6 +10,7 @@ public interface Service<E extends Entity> {
 		if (pageSize < list.size()) {
 			int startIndex = (pageNum - 1) * pageSize;
 			int endIndex = pageNum * (pageSize - 1);
+			endIndex = endIndex > list.size() ? list.size() : endIndex;
 			return list.subList(startIndex, endIndex);
 		} else {
 			return list;
