@@ -34,4 +34,8 @@
 		class="com.ticketbooking.storage.impl.MapStorage" init-method="initFromFile">
 		<property name="filePath" value="${storage.inputDataFile}"></property>
 	</bean>
+	<bean id="abstractDao"
+		class="com.ticketbooking.storage.dao.AbstractStorageDao"
+		abstract="true" init-method="initIdCounter">
+	</bean>
 </beans>

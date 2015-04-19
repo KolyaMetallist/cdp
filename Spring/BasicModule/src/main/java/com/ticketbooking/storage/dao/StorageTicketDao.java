@@ -8,9 +8,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.List;
 
 import com.ticketbooking.dao.model.TicketDao;
-import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
-import com.ticketbooking.model.impl.EventImpl;
 import com.ticketbooking.model.impl.TicketImpl;
 
 /**
