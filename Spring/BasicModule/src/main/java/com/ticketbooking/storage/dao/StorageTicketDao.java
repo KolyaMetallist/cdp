@@ -50,4 +50,12 @@ public class StorageTicketDao extends AbstractStorageDao<Ticket> implements
 				.collect(toList());
 	}
 
+	@Override
+	public List<Ticket> getTicketsByEvent(long eventId) {
+		return getAll()
+				.stream()
+				.filter(ticket -> ticket.getEventId() == eventId)
+				.collect(toList());
+	}
+
 }

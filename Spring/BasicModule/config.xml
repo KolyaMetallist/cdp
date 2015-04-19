@@ -31,11 +31,44 @@
 	
 	
 	<bean id="dataSource"
-		class="com.ticketbooking.storage.impl.MapStorage" init-method="initFromFile">
+		class="com.ticketbooking.storage.impl.MapStorage"
+		init-method="initFromFile" autowire-candidate="true">
 		<property name="filePath" value="${storage.inputDataFile}"></property>
 	</bean>
 	<bean id="abstractDao"
 		class="com.ticketbooking.storage.dao.AbstractStorageDao"
-		abstract="true" init-method="initIdCounter">
+		abstract="true" init-method="initIdCounter" autowire="byType">
+	</bean>
+	<bean id="userDao"
+		class="com.ticketbooking.storage.dao.StorageUserDao"
+		parent="abstractDao">
+	</bean>
+	<bean id="eventDao"
+		class="com.ticketbooking.storage.dao.StorageEventDao"
+		parent="abstractDao">
+	</bean>
+	<bean id="ticketDao"
+		class="com.ticketbooking.storage.dao.StorageTicketDao"
+		parent="abstractDao">
+	</bean>
+	<bean id="userService"
+		class="com.ticketbooking.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+		<property name="ticketDao" ref="ticketDao"></property>
+	</bean>
+	<bean id="eventService"
+		class="com.ticketbooking.service.impl.EventServiceImpl">
+		<property name="eventDao" ref="eventDao"></property>
+		<property name="ticketDao" ref="ticketDao"></property>
+	</bean>
+	<bean id="ticketService"
+		class="com.ticketbooking.service.impl.TicketServiceImpl">
+		<property name="ticketDao" ref="ticketDao"></property>
+	</bean>
+	<bean id="bookingFacade"
+		class="com.ticketbooking.facade.impl.BookingFacadeImpl">
+		<constructor-arg ref="userService"></constructor-arg>
+		<constructor-arg ref="eventService"></constructor-arg>
+		<constructor-arg ref="ticketService"></constructor-arg>
 	</bean>
 </beans>

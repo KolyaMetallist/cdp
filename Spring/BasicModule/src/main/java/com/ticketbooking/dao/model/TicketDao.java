@@ -12,10 +12,19 @@ import com.ticketbooking.model.Ticket;
 public interface TicketDao extends Dao<Ticket> {
 	
 	/**
-	 * Get tickets booked be the user id
+	 * Get tickets booked by the user id
 	 * 
-	 * @return
+	 * @param userId - user id
+	 * @return the list of tickets
 	 */
 	List<Ticket> getTicketsByUser(long userId);
+	
+	/**
+	 * Get tickets booked by the event id
+	 * 
+	 * @param eventId - event id
+	 * @return the list of tickets
+	 */
+	List<Ticket> getTicketsByEvent(long eventId);
 
 }
