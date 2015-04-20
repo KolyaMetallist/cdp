@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.springframework.core.io.Resource;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ticketbooking.model.Entity;
@@ -32,7 +34,7 @@ import com.ticketbooking.storage.Storage;
 public class MapStorage implements Storage<Entity> {
 	
 	private Map<String, Entity> memory;
-	private String filePath;
+	private Resource fileResource;
 	
 	public MapStorage() {
 		memory = new HashMap<>();
@@ -59,14 +61,14 @@ public class MapStorage implements Storage<Entity> {
 	}
 
 	@Override
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setFileResource(Resource fileResource) {
+		this.fileResource = fileResource;
 	}
 
 	@Override
 	public void initFromFile() {
 		try(BufferedReader br = new BufferedReader(  
-			     new FileReader(filePath))) {
+			     new FileReader(fileResource.getFile()))) {
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			gsonBuilder.registerTypeAdapter(Date.class, Functions.jsonDateConverter);
 			
@@ -132,13 +134,10 @@ public class MapStorage implements Storage<Entity> {
 		
 		System.out.println(user.getClass().getInterfaces()[0].getSimpleName().toLowerCase());*/
 		MapStorage ms = new MapStorage();
-		ms.setFilePath("src/main/resources/inputData.json");
+		//ms.setFilePath("src/main/resources/inputData.json");
 		
 		ms.initFromFile();
 		System.out.println(ms.memory);
 
 	}
-	
-	
- 
 }

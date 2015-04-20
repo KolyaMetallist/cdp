@@ -5,6 +5,8 @@ package com.ticketbooking.storage;
 
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+
 import com.ticketbooking.model.Entity;
 
 /**
@@ -50,7 +52,7 @@ public interface Storage<E extends Entity> {
 	 * 
 	 * @param filePath - path to the file
 	 */
-	void setFilePath(String filePath);
+	void setFileResource(Resource file);
 	
 	/**
 	 *  Inits the storage

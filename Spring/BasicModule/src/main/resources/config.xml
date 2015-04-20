@@ -21,7 +21,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
 
-
+	<!-- Placeholder -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations"
@@ -29,28 +29,35 @@
 		</property>
 	</bean>
 	
-	
-	<bean id="dataSource"
+	<!-- Storage -->
+	<bean id="storage"
 		class="com.ticketbooking.storage.impl.MapStorage"
-		init-method="initFromFile" autowire-candidate="true">
-		<property name="filePath" value="${storage.inputDataFile}"></property>
+		init-method="initFromFile">
+		<property name="fileResource" value="${storage.inputDataFile}"></property>
 	</bean>
+	
+	<!-- Dao -->
 	<bean id="abstractDao"
 		class="com.ticketbooking.storage.dao.AbstractStorageDao"
-		abstract="true" init-method="initIdCounter" autowire="byType">
+		abstract="true" init-method="initIdCounter">
 	</bean>
 	<bean id="userDao"
 		class="com.ticketbooking.storage.dao.StorageUserDao"
-		parent="abstractDao">
+		parent="abstractDao"
+		autowire="byType">
 	</bean>
 	<bean id="eventDao"
 		class="com.ticketbooking.storage.dao.StorageEventDao"
-		parent="abstractDao">
+		parent="abstractDao"
+		autowire="byType">
 	</bean>
 	<bean id="ticketDao"
 		class="com.ticketbooking.storage.dao.StorageTicketDao"
-		parent="abstractDao">
+		parent="abstractDao"
+		autowire="byType">
 	</bean>
+	
+	<!-- Services -->
 	<bean id="userService"
 		class="com.ticketbooking.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
@@ -65,6 +72,8 @@
 		class="com.ticketbooking.service.impl.TicketServiceImpl">
 		<property name="ticketDao" ref="ticketDao"></property>
 	</bean>
+	
+	<!-- Facade -->
 	<bean id="bookingFacade"
 		class="com.ticketbooking.facade.impl.BookingFacadeImpl">
 		<constructor-arg ref="userService"></constructor-arg>

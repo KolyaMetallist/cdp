@@ -23,6 +23,10 @@ public abstract class AbstractStorageDao<E extends Entity> implements Dao<E> {
 	protected Storage<Entity> getStorage() {
 		return storage;
 	}
+	
+	public void setStorage(Storage<Entity> storage) {
+		this.storage = storage;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
