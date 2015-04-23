@@ -80,4 +80,23 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 		this.place = place;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TicketImpl [eventId=");
+		builder.append(eventId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", place=");
+		builder.append(place);
+		builder.append(", getId()=");
+		builder.append(getId());
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }

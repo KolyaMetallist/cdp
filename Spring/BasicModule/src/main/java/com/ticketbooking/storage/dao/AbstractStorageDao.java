@@ -67,6 +67,6 @@ public abstract class AbstractStorageDao<E extends Entity> implements Dao<E> {
 	}
 	
 	public void initIdCounter() {
-		idCounter = new AtomicLong(computeMaxId() + 1);
+		idCounter = new AtomicLong(computeMaxId());
 	}
 }

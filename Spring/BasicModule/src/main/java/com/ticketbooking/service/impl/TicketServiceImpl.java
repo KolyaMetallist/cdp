@@ -36,7 +36,8 @@ public class TicketServiceImpl implements TicketService {
 		ticket.setEventId(eventId);
 		ticket.setPlace(place);
 		ticket.setCategory(category);
-		return ticketDao.create(ticket);
+		ticketDao.create(ticket);
+		return ticket;
 	}
 
 	/* (non-Javadoc)

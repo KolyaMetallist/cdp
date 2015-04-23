@@ -6,6 +6,7 @@ package com.ticketbooking.model.impl;
 import java.util.Date;
 
 import com.ticketbooking.model.Event;
+import com.ticketbooking.storage.Functions;
 
 /**
  * Implementation for Event
@@ -48,4 +49,19 @@ public class EventImpl extends AbstractEntity implements Event {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("EventImpl [title=");
+		builder.append(title);
+		builder.append(", date=");
+		builder.append(Functions.DATE_FORMAT.format(date));
+		builder.append(", getId()=");
+		builder.append(getId());
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
 }

@@ -46,4 +46,19 @@ public class UserImpl extends AbstractEntity implements User {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserImpl [name=");
+		builder.append(name);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", getId()=");
+		builder.append(getId());
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }
