@@ -41,7 +41,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-		return getPageList(eventDao.getEventsByTitle(title), pageSize, pageNum);
+		return getPageList(eventDao.getEventsByTitle(title), pageNum, pageSize);
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +49,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-		return getPageList(eventDao.getEventsForDay(day), pageSize, pageNum);
+		return getPageList(eventDao.getEventsForDay(day), pageNum, pageSize);
 	}
 
 	/* (non-Javadoc)

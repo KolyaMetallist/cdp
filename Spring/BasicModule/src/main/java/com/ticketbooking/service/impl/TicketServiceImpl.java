@@ -45,7 +45,7 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-		return getPageList(ticketDao.getTicketsByUser(user.getId()), pageSize, pageNum);
+		return getPageList(ticketDao.getTicketsByUser(user.getId()), pageNum, pageSize);
 	}
 
 	/* (non-Javadoc)
@@ -53,7 +53,7 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-		return getPageList(ticketDao.getTicketsByEvent(event.getId()), pageSize, pageNum);
+		return getPageList(ticketDao.getTicketsByEvent(event.getId()), pageNum, pageSize);
 	}
 
 	/* (non-Javadoc)
