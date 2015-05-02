@@ -28,6 +28,8 @@ public abstract class AbstractTest {
 	public static final String USER_EMAIL = "max_sukachev@metallist.ua";
 	public static final String USER_NEW_NAME = "New Name";
 	public static final long USER_ID = 123l;
+	public static final long EVENT_ID = 45l;
+	public static final String EVENT_NAME = "Concert";
 
 	/**
 	 * @throws java.lang.Exception

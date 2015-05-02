@@ -32,7 +32,7 @@ import com.ticketbooking.model.impl.TicketImpl;
  * Test for UserServiceImpl
  *
  */
-public class UserServiceImplTest extends AbstractTest{
+public class UserServiceImplTest extends AbstractTest {
 	
 	@InjectMocks
 	private UserServiceImpl userService;

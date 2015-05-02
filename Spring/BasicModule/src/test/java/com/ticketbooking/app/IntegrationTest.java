@@ -103,7 +103,7 @@ public class IntegrationTest extends AbstractTest{
 		Event event = buildEvent();
 		bookingFacade.createEvent(event);
 		
-		assertThat(bookingFacade.getEventsByTitle("Concert", 10, 1), hasItem(event));
+		assertThat(bookingFacade.getEventsByTitle(AbstractTest.EVENT_NAME, 10, 1), hasItem(event));
 		assertThat(bookingFacade.getEventsForDay(Functions.DATE_FORMAT.parse(EVENT_DATE), 10, 1), hasItem(event));
 		
 		Event eventToUpdate = buildCloneEvent(event);
