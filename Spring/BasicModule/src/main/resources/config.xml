@@ -23,18 +23,14 @@
 
 	<!-- Placeholder -->
 	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations"
-			value="classpath:storage.properties">
-		</property>
-	</bean>
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:locations="classpath:storage.properties"/>
 	
 	<!-- Storage -->
 	<bean id="storage"
 		class="com.ticketbooking.storage.impl.MapStorage"
-		init-method="initFromFile">
-		<property name="fileResource" value="${storage.inputDataFile}"></property>
-	</bean>
+		init-method="initFromFile"
+		p:fileResource="${storage.inputDataFile}"/>
 	
 	<!-- Dao -->
 	<bean id="abstractDao"
@@ -59,25 +55,21 @@
 	
 	<!-- Services -->
 	<bean id="userService"
-		class="com.ticketbooking.service.impl.UserServiceImpl">
-		<property name="userDao" ref="userDao"></property>
-		<property name="ticketDao" ref="ticketDao"></property>
-	</bean>
+		class="com.ticketbooking.service.impl.UserServiceImpl"
+		p:userDao-ref="userDao"
+		p:ticketDao-ref="ticketDao"/>
 	<bean id="eventService"
-		class="com.ticketbooking.service.impl.EventServiceImpl">
-		<property name="eventDao" ref="eventDao"></property>
-		<property name="ticketDao" ref="ticketDao"></property>
-	</bean>
+		class="com.ticketbooking.service.impl.EventServiceImpl"
+		p:eventDao-ref="eventDao"
+		p:ticketDao-ref="ticketDao"/>
 	<bean id="ticketService"
-		class="com.ticketbooking.service.impl.TicketServiceImpl">
-		<property name="ticketDao" ref="ticketDao"></property>
-	</bean>
+		class="com.ticketbooking.service.impl.TicketServiceImpl"
+		p:ticketDao-ref="ticketDao"/>
 	
 	<!-- Facade -->
 	<bean id="bookingFacade"
-		class="com.ticketbooking.facade.impl.BookingFacadeImpl">
-		<constructor-arg ref="userService"></constructor-arg>
-		<constructor-arg ref="eventService"></constructor-arg>
-		<constructor-arg ref="ticketService"></constructor-arg>
-	</bean>
+		class="com.ticketbooking.facade.impl.BookingFacadeImpl"
+		c:userService-ref="userService"
+		c:eventService-ref="eventService"
+		c:ticketService-ref="ticketService"/>
 </beans>
