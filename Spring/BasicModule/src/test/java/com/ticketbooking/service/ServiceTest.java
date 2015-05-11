@@ -16,7 +16,7 @@ import com.ticketbooking.app.AbstractTest;
 import com.ticketbooking.model.Entity;
 
 /**
- * @author kolya_metallist
+ * Test for ServiceTest
  *
  */
 public class ServiceTest extends AbstractTest {

@@ -5,6 +5,9 @@ package com.ticketbooking.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
@@ -19,6 +22,8 @@ import com.ticketbooking.service.TicketService;
  */
 public class TicketServiceImpl implements TicketService {
 	
+	private static final Logger logger = LogManager.getLogger();
+	
 	private TicketDao ticketDao;
 	
 	public void setTicketDao(TicketDao ticketDao) {
@@ -31,6 +36,8 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public Ticket bookTicket(long userId, long eventId, int place,
 			Category category) {
+		logger.info("Booking ticket: userId {}, eventId {}, place {}, cat {}",
+				userId, eventId, place, category);	
 		Ticket ticket = new TicketImpl();
 		ticket.setUserId(userId);
 		ticket.setEventId(eventId);
@@ -45,6 +52,7 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
+		logger.info("Getting tickets by user {}", user.getName());
 		return getPageList(ticketDao.getTicketsByUser(user.getId()), pageNum, pageSize);
 	}
 
@@ -53,6 +61,7 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
+		logger.info("Getting tickets by user {}", event.getTitle());
 		return getPageList(ticketDao.getTicketsByEvent(event.getId()), pageNum, pageSize);
 	}
 
@@ -61,8 +70,10 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public boolean cancelTicket(long ticketId) {
+		logger.info("Deleting ticket {}", ticketId);
 		Ticket ticket = ticketDao.read(ticketId);
 		if (ticket == null) {
+			logger.error("Ticket {} doesn't exist");
 			return false;
 		} else {
 			return ticketDao.delete(ticket) == null ? false : true;

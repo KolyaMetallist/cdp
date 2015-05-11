@@ -5,7 +5,8 @@ package com.ticketbooking.service.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.dao.model.UserDao;
@@ -18,7 +19,7 @@ import com.ticketbooking.service.UserService;
  */
 public class UserServiceImpl implements UserService {
 	
-	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger();
 	
 	private UserDao userDao;
 	private TicketDao ticketDao;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User getUserById(long id) {
-		logger.info("Getting user by id: " + id);
+		logger.info("Getting user by id: {}", id);
 		return userDao.read(id);
 	}
 
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User getUserByEmail(String email) {
-		logger.info("Getting user by email: " + email);
+		logger.info("Getting user by email: {}", email);
 		return userDao.getUserByEmail(email);
 	}
 
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-		logger.info("Getting users by name: " + name);
+		logger.info("Getting users by name: {}", name);
 		return getPageList(userDao.getUsersByName(name), pageNum, pageSize);
 	}
 
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User createUser(User user) {
-		logger.info("Creating user: " + user.getName());
+		logger.info("Creating user: {}", user.getName());
 		return userDao.create(user);
 	}
 
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User updateUser(User user) {
-		logger.info("Updating user: " + user.getName());
+		logger.info("Updating user: {}", user.getName());
 		return userDao.update(user);
 	}
 
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public boolean deleteUser(long userId) {
-		logger.info("Deleting user:" + userId);
+		logger.info("Deleting user: {}", userId);
 		User user = userDao.read(userId);
 		if (user == null) {
 			logger.error("User doesn't exists");

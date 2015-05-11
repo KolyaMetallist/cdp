@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 
 import com.google.gson.Gson;
@@ -32,6 +34,8 @@ import com.ticketbooking.storage.Storage;
  *
  */
 public class MapStorage implements Storage<Entity> {
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	private Map<String, Entity> memory;
 	private Resource fileResource;
@@ -69,6 +73,7 @@ public class MapStorage implements Storage<Entity> {
 	public void initFromFile() {
 		try(BufferedReader br = new BufferedReader(  
 			     new FileReader(fileResource.getFile()))) {
+			logger.info("Starting file reading: {}", fileResource.getFile());
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			gsonBuilder.registerTypeAdapter(Date.class, Functions.jsonDateConverter);
 			
@@ -78,10 +83,9 @@ public class MapStorage implements Storage<Entity> {
 			Stream.of(data.getUsers()).forEach(user -> memory.put(Functions.composeId.apply(user), user));
 			Stream.of(data.getEvents()).forEach(event -> memory.put(Functions.composeId.apply(event), event));
 			Stream.of(data.getTickets()).forEach(ticket -> memory.put(Functions.composeId.apply(ticket), ticket));
-			
+			logger.info("File reading has been finished");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error during file reading", e);
 		}
 	}
 	

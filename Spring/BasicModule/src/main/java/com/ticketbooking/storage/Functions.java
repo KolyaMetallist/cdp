@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Function;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonDeserializer;
 import com.ticketbooking.model.Entity;
 
@@ -17,6 +20,8 @@ import com.ticketbooking.model.Entity;
  *
  */
 public abstract class Functions {
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	private static final String COMPOSE_ID_DELIMITER = ":";
 	
@@ -34,8 +39,7 @@ public abstract class Functions {
 		try {
 			return Functions.DATE_FORMAT.parse(json.getAsString());
 		} catch (ParseException e) {
-			e.printStackTrace();
-			// add log
+			logger.error("Error during data parsing", e);
 		}
 	    return null;
 	};

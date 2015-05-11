@@ -11,7 +11,7 @@ import com.ticketbooking.storage.Functions;
 import com.ticketbooking.storage.Storage;
 
 /**
- * @author kolya_metallist
+ * Holds the common Dao operations, CRUD, link to storage
  *
  */
 public abstract class AbstractStorageDao<E extends Entity> implements Dao<E> {
