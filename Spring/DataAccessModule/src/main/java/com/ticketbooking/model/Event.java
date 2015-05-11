@@ -11,4 +11,6 @@ public interface Event extends Entity {
     void setTitle(String title);
     Date getDate();
     void setDate(Date date);
+    double getTicketPrice();
+    void setTicketPrice(double ticketPrice);
 }

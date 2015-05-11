@@ -16,6 +16,7 @@ public class EventImpl extends AbstractEntity implements Event {
 	
 	private String title;
 	private Date date;
+	private double ticketPrice;
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.model.Event#getTitle()
@@ -48,6 +49,17 @@ public class EventImpl extends AbstractEntity implements Event {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	@Override
+	public double getTicketPrice() {
+		return ticketPrice;
+	}
+
+	@Override
+	public void setTicketPrice(double ticketPrice) {
+		this.ticketPrice = ticketPrice;
+	}
+	
 
 	@Override
 	public String toString() {
@@ -55,13 +67,12 @@ public class EventImpl extends AbstractEntity implements Event {
 		builder.append("EventImpl [title=");
 		builder.append(title);
 		builder.append(", date=");
-		builder.append(Functions.DATE_FORMAT.format(date));
+		builder.append(date);
+		builder.append(", ticketPrice=");
+		builder.append(ticketPrice);
 		builder.append(", getId()=");
 		builder.append(getId());
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
 }

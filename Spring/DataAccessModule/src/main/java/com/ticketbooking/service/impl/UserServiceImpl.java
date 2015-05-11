@@ -9,8 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import com.ticketbooking.dao.model.TicketDao;
+import com.ticketbooking.dao.model.UserAccountDao;
 import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.service.UserService;
 
 /**
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
 	
 	private UserDao userDao;
 	private TicketDao ticketDao;
+	private UserAccountDao userAccountDao;
 	
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -30,6 +33,10 @@ public class UserServiceImpl implements UserService {
 	
 	public void setTicketDao(TicketDao ticketDao) {
 		this.ticketDao = ticketDao;
+	}
+	
+	public void setUserAccountDao(UserAccountDao userAccountDao) {
+		this.userAccountDao = userAccountDao;
 	}
 
 	/* (non-Javadoc)
@@ -92,6 +99,10 @@ public class UserServiceImpl implements UserService {
 				.getTicketsByUser(userId)
 				.stream()
 				.forEach(ticketDao::delete);
+			UserAccount userAccount = userAccountDao.read(userId);
+			if (userAccount != null) {
+				userAccountDao.delete(userAccount);
+			}
 			return userDao.delete(user) == null ? false : true;
 		}
 	}

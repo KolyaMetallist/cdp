@@ -11,8 +11,10 @@ import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.Ticket.Category;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.service.EventService;
 import com.ticketbooking.service.TicketService;
+import com.ticketbooking.service.UserAccountService;
 import com.ticketbooking.service.UserService;
 
 /**
@@ -24,11 +26,13 @@ public class BookingFacadeImpl implements BookingFacade {
 	private UserService userService;
 	private EventService eventService;
 	private TicketService ticketService;
+	private UserAccountService userAccountService;
 	
-	public BookingFacadeImpl(UserService userService, EventService eventService, TicketService ticketService) {
+	public BookingFacadeImpl(UserService userService, EventService eventService, TicketService ticketService, UserAccountService userAccountService) {
 		this.userService = userService;
 		this.eventService = eventService;
 		this.ticketService = ticketService;
+		this.userAccountService = userAccountService;
 	}
 
 	/* (non-Javadoc)
@@ -158,6 +162,26 @@ public class BookingFacadeImpl implements BookingFacade {
 	@Override
 	public boolean cancelTicket(long ticketId) {
 		return ticketService.cancelTicket(ticketId);
+	}
+
+	@Override
+	public UserAccount getUserAccountById(long id) {
+		return userAccountService.getUserAccountById(id);
+	}
+
+	@Override
+	public UserAccount createUserAccount(User user, double amount) {
+		return userAccountService.createUserAccount(user, amount);
+	}
+
+	@Override
+	public boolean refillUserAccount(User user, double delta) {
+		return userAccountService.refillUserAccount(user, delta);
+	}
+
+	@Override
+	public boolean deleteUserAccount(long userAccountId) {
+		return userAccountService.deleteUserAccount(userAccountId);
 	}
 
 }
