@@ -14,6 +14,8 @@ import com.ticketbooking.model.Event;
  *
  */
 public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
+	
+	private static final String 
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)

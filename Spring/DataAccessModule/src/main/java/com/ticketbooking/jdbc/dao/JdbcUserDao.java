@@ -13,13 +13,14 @@ import com.ticketbooking.model.User;
  *
  */
 public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
+	
+	private static final String USER = "USER";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
 	 */
 	@Override
 	public User create(User entity) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -28,8 +29,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public User read(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, USER), new Object[] {id}, userMapper);
 	}
 
 	/* (non-Javadoc)
@@ -55,8 +55,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, USER), userMapper);
 	}
 
 	/* (non-Javadoc)
