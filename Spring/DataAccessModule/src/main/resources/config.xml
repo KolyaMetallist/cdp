@@ -77,11 +77,14 @@
 	<bean id="ticketService"
 		class="com.ticketbooking.service.impl.TicketServiceImpl"
 		p:ticketDao-ref="ticketDao"/>
+	<bean id="userAccountService"
+		class="com.ticketbooking.service.impl.UserAccountServiceImpl"/>
 	
 	<!-- Facade -->
 	<bean id="bookingFacade"
 		class="com.ticketbooking.facade.impl.BookingFacadeImpl"
 		c:userService-ref="userService"
 		c:eventService-ref="eventService"
-		c:ticketService-ref="ticketService"/>
+		c:ticketService-ref="ticketService"
+		c:userAccountService-ref="userAccountService"/>
 </beans>
