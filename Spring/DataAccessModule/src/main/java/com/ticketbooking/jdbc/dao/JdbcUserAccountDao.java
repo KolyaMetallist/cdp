@@ -14,6 +14,8 @@ import com.ticketbooking.model.UserAccount;
  */
 public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 		UserAccountDao {
+	
+	private static final String USER_ACCOUNT = "USER_ACCOUNT";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -29,8 +31,7 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 	 */
 	@Override
 	public UserAccount read(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, USER_ACCOUNT), new Object[] {id}, userAccountMapper);
 	}
 
 	/* (non-Javadoc)
@@ -56,8 +57,7 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 	 */
 	@Override
 	public List<UserAccount> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, USER_ACCOUNT), userAccountMapper);
 	}
 
 }

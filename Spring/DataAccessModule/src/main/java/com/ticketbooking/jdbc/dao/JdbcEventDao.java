@@ -15,7 +15,7 @@ import com.ticketbooking.model.Event;
  */
 public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	
-	private static final String 
+	private static final String EVENT = "EVENT";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -31,8 +31,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public Event read(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, EVENT), new Object[] {id}, eventMapper);
 	}
 
 	/* (non-Javadoc)
@@ -58,8 +57,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public List<Event> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, EVENT), eventMapper);
 	}
 
 	/* (non-Javadoc)
