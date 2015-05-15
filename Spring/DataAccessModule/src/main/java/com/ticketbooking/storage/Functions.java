@@ -34,6 +34,7 @@ public abstract class Functions {
 																x.getId();
 
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+	public static final DateFormat DATE_FORMAT_DB = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static final JsonDeserializer<Date> jsonDateConverter = (json, typeOfT, context) -> {
 		try {

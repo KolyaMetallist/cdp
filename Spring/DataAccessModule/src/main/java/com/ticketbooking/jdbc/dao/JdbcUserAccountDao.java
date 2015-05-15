@@ -22,8 +22,8 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 	 */
 	@Override
 	public UserAccount create(UserAccount entity) {
-		// TODO Auto-generated method stub
-		return null;
+		jdbcTemplate.update(INSERT_USER_ACCOUNT, entity.getId(), entity.getAmount());
+		return entity;
 	}
 
 	/* (non-Javadoc)

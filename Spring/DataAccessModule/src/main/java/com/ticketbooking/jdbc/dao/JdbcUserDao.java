@@ -3,7 +3,12 @@
  */
 package com.ticketbooking.jdbc.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
+
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.User;
@@ -21,7 +26,14 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public User create(User entity) {
-		return null;
+		PreparedStatementCreator psc = connection -> {
+			PreparedStatement ps = connection.prepareStatement(INSERT_USER, new String[] {"id"});
+			ps.setString(1, entity.getName());
+			ps.setString(2, entity.getEmail());
+			return ps;
+		};
+		super.createEntityWithAutoIncrement(psc, entity);
+		return entity;
 	}
 
 	/* (non-Javadoc)

@@ -3,7 +3,10 @@
  */
 package com.ticketbooking.jdbc.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
+
+import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Ticket;
@@ -21,8 +24,16 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public Ticket create(Ticket entity) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatementCreator psc = connection -> {
+			PreparedStatement ps = connection.prepareStatement(INSERT_USER, new String[] {"id"});
+			ps.setLong(1, entity.getEventId());
+			ps.setLong(2, entity.getUserId());
+			ps.setString(3, entity.getCategory().name());
+			ps.setInt(4, entity.getPlace());
+			return ps;
+		};
+		super.createEntityWithAutoIncrement(psc, entity);
+		return entity;
 	}
 
 	/* (non-Javadoc)

@@ -4,7 +4,10 @@
 package com.ticketbooking.jdbc.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.ticketbooking.dao.Dao;
 import com.ticketbooking.model.Entity;
@@ -59,11 +62,21 @@ public abstract class AbstractJdbcDao<E extends Entity> implements Dao<E> {
 	
 	protected static final String SELECT_STATEMENT = "SELECT * FROM %s WHERE ID = ?";
 	protected static final String SELECT_ALL_STATEMENT = "SELECT * FROM %s";
+	protected static final String INSERT_USER = "INSERT INTO USER (NAME, EMAIL) VALUES(?,?)";
+	protected static final String INSERT_EVENT = "INSERT INTO EVENT (TITLE, DATE, TICKETPRICE) VALUES (?,?,?)";
+	protected static final String INSERT_TICKET = "INSERT INTO TICKET (EVENT_ID, USER_ID, CATEGORY, PLACE) VALUES (?,?,?,?)";
+	protected static final String INSERT_USER_ACCOUNT = "INSERT INTO USER_ACCOUNT VALUES (?,?)";
 	
 	protected JdbcTemplate jdbcTemplate;
 	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+	}
+	
+	protected void createEntityWithAutoIncrement(PreparedStatementCreator psc, E entity) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(psc, keyHolder);
+		entity.setId(keyHolder.getKey().longValue());
 	}
 
 }
