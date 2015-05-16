@@ -25,7 +25,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	@Override
 	public User create(User entity) {
 		PreparedStatementCreator psc = connection -> {
-			PreparedStatement ps = connection.prepareStatement(INSERT_USER, new String[] {"id"});
+			PreparedStatement ps = connection.prepareStatement(INSERT_USER, new String[] {"ID"});
 			ps.setString(1, entity.getName());
 			ps.setString(2, entity.getEmail());
 			return ps;
@@ -65,8 +65,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.queryForObject(SELECT_USER_BY_EMAIL, new Object[] {email}, userMapper);
 	}
 
 	/* (non-Javadoc)
@@ -74,8 +73,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public List<User> getUsersByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_USERS_BY_NAME, new Object[] {'%' + name.trim() + '%'}, userMapper);
 	}
 
 }

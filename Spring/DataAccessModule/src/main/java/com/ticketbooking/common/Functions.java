@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ticketbooking.storage;
+package com.ticketbooking.common;
 
 import java.text.DateFormat;
 import java.text.ParseException;

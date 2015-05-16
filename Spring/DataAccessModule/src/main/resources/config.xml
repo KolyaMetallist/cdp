@@ -26,41 +26,39 @@
 	<!-- Placeholder -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:locations="classpath:storage.properties"/>
+		p:locations="classpath:database.properties"/>
 		
 	<jdbc:embedded-database id="dataSource" type="HSQL">
-		<jdbc:script location="classpath:schema.sql"/>
-		<jdbc:script location="classpath:test-data.sql"/>
+		<jdbc:script location="${db.schema}"/>
+		<jdbc:script location="${db.data}"/>
 	</jdbc:embedded-database>
 	
 	<bean id="jdbcTemplate"
-		class="org.springframework.jdbc.core.JdbcTemplate"
-		p:dataSource-ref="dataSource"
-		/>
-	
-	<!-- Storage -->
-	<bean id="storage"
-		class="com.ticketbooking.storage.impl.MapStorage"
-		init-method="initFromFile"
-		p:fileResource="${storage.inputDataFile}"/>
+		class="com.ticketbooking.jdbc.core.JdbcTemplateExtended"
+		p:dataSource-ref="dataSource"/>
 	
 	<!-- Dao -->
 	<bean id="abstractDao"
-		class="com.ticketbooking.storage.dao.AbstractStorageDao"
-		abstract="true" init-method="initIdCounter">
+		class="com.ticketbooking.jdbc.dao.AbstractJdbcDao"
+		abstract="true">
 	</bean>
 	<bean id="userDao"
-		class="com.ticketbooking.storage.dao.StorageUserDao"
+		class="com.ticketbooking.jdbc.dao.JdbcUserDao"
 		parent="abstractDao"
 		autowire="byType">
 	</bean>
 	<bean id="eventDao"
-		class="com.ticketbooking.storage.dao.StorageEventDao"
+		class="com.ticketbooking.jdbc.dao.JdbcEventDao"
 		parent="abstractDao"
 		autowire="byType">
 	</bean>
 	<bean id="ticketDao"
-		class="com.ticketbooking.storage.dao.StorageTicketDao"
+		class="com.ticketbooking.jdbc.dao.JdbcTicketDao"
+		parent="abstractDao"
+		autowire="byType">
+	</bean>
+	<bean id="userAccountDao"
+		class="com.ticketbooking.jdbc.dao.JdbcUserAccountDao"
 		parent="abstractDao"
 		autowire="byType">
 	</bean>
@@ -69,7 +67,8 @@
 	<bean id="userService"
 		class="com.ticketbooking.service.impl.UserServiceImpl"
 		p:userDao-ref="userDao"
-		p:ticketDao-ref="ticketDao"/>
+		p:ticketDao-ref="ticketDao"
+		p:userAccountDao-ref="userAccountDao"/>
 	<bean id="eventService"
 		class="com.ticketbooking.service.impl.EventServiceImpl"
 		p:eventDao-ref="eventDao"
@@ -78,7 +77,8 @@
 		class="com.ticketbooking.service.impl.TicketServiceImpl"
 		p:ticketDao-ref="ticketDao"/>
 	<bean id="userAccountService"
-		class="com.ticketbooking.service.impl.UserAccountServiceImpl"/>
+		class="com.ticketbooking.service.impl.UserAccountServiceImpl"
+		p:userAccountDao-ref="userAccountDao"/>
 	
 	<!-- Facade -->
 	<bean id="bookingFacade"

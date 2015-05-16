@@ -9,11 +9,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ticketbooking.common.Functions;
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.service.EventService;
-import com.ticketbooking.storage.Functions;
 
 /**
  * EventService implementation

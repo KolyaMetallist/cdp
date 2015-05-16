@@ -24,11 +24,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ticketbooking.common.Functions;
 import com.ticketbooking.facade.BookingFacade;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
-import com.ticketbooking.storage.Functions;
 
 /**
  * Integration test

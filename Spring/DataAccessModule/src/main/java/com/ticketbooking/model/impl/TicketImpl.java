@@ -96,7 +96,50 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime * result + (int) (eventId ^ (eventId >>> 32));
+		result = prime * result + place;
+		result = prime * result + (int) (userId ^ (userId >>> 32));
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof TicketImpl)) {
+			return false;
+		}
+		TicketImpl other = (TicketImpl) obj;
+		if (category != other.category) {
+			return false;
+		}
+		if (eventId != other.eventId) {
+			return false;
+		}
+		if (place != other.place) {
+			return false;
+		}
+		if (userId != other.userId) {
+			return false;
+		}
+		return true;
+	}
+	
 }

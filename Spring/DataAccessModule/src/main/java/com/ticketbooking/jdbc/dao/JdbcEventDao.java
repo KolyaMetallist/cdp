@@ -3,8 +3,6 @@
  */
 package com.ticketbooking.jdbc.dao;
 
-import static com.ticketbooking.storage.Functions.DATE_FORMAT_DB;
-
 import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.List;
@@ -28,9 +26,9 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	@Override
 	public Event create(Event entity) {
 		PreparedStatementCreator psc = connection -> {
-			PreparedStatement ps = connection.prepareStatement(INSERT_EVENT, new String[] {"id"});
+			PreparedStatement ps = connection.prepareStatement(INSERT_EVENT, new String[] {"ID"});
 			ps.setString(1, entity.getTitle());
-			ps.setString(2, DATE_FORMAT_DB.format(entity.getDate()));
+			ps.setDate(2, new java.sql.Date(entity.getDate().getTime()));
 			ps.setDouble(3, entity.getTicketPrice());
 			return ps;
 		};
@@ -52,7 +50,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	@Override
 	public Event update(Event entity) {
 		Event event = read(entity.getId());
-		int rows = jdbcTemplate.update(UPDATE_USER, entity.getTitle(), DATE_FORMAT_DB.format(entity.getDate()), entity.getTicketPrice(), entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_EVENT, entity.getTitle(),  new java.sql.Date(entity.getDate().getTime()), entity.getTicketPrice(), entity.getId());
 		return rows > 0 ? event : null;
 	}
 
@@ -69,8 +67,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public List<Event> getEventsByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_EVENT_BY_TITLE, new Object[] {'%' + title.trim() + '%'}, eventMapper);
 	}
 
 	/* (non-Javadoc)
@@ -78,8 +75,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public List<Event> getEventsForDay(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_EVENT_BY_DATE, new Object[] {new java.sql.Date(day.getTime())}, eventMapper);
 	}
 
 }

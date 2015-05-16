@@ -40,4 +40,39 @@ public class UserAccountImpl extends AbstractEntity implements UserAccount {
 		return builder.toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		long temp;
+		temp = Double.doubleToLongBits(amount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof UserAccountImpl)) {
+			return false;
+		}
+		UserAccountImpl other = (UserAccountImpl) obj;
+		if (Double.doubleToLongBits(amount) != Double
+				.doubleToLongBits(other.amount)) {
+			return false;
+		}
+		return true;
+	}
+	
 }

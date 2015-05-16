@@ -23,9 +23,11 @@ import org.mockito.Mock;
 
 import com.ticketbooking.app.AbstractTest;
 import com.ticketbooking.dao.model.TicketDao;
+import com.ticketbooking.dao.model.UserAccountDao;
 import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.model.impl.TicketImpl;
 
 /**
@@ -40,11 +42,14 @@ public class UserServiceImplTest extends AbstractTest {
 	private UserDao userDao;
 	@Mock
 	private TicketDao ticketDao;
+	@Mock
+	private UserAccountDao userAccountDao;
 	
 	private User user;
 	private User updatedUser;
 	private Ticket ticket1;
 	private Ticket ticket2;
+	private UserAccount userAccount;
 
 	/**
 	 * @throws java.lang.Exception
@@ -56,7 +61,8 @@ public class UserServiceImplTest extends AbstractTest {
 		updatedUser = buildCloneUser(user);
 		ticket1 = new TicketImpl();
 		ticket2 = new TicketImpl();
-		when(userDao.read(AbstractTest.USER_ID)).thenReturn(user);
+		userAccount = buildUserAccount(user);
+		when(userDao.read(USER_ID)).thenReturn(user);
 		when(userDao.getUserByEmail(USER_EMAIL)).thenReturn(user);
 		when(userDao.getUsersByName(USER_NAME)).thenReturn(Arrays.asList(user));
 		when(userDao.create(user)).thenAnswer(invocation -> 
@@ -67,6 +73,8 @@ public class UserServiceImplTest extends AbstractTest {
 		when(userDao.delete(user)).thenReturn(user);
 		when(ticketDao.getTicketsByUser(USER_ID)).thenReturn(Arrays.asList(ticket1, ticket2));
 		when(ticketDao.delete(any(Ticket.class))).thenReturn(any(Ticket.class));
+		when(userAccountDao.read(USER_ID)).thenReturn(userAccount);
+		when(userAccountDao.delete(userAccount)).thenReturn(userAccount);
 	}
 
 	/**
@@ -74,8 +82,8 @@ public class UserServiceImplTest extends AbstractTest {
 	 */
 	@Test
 	public void testGetUserById() {
-		assertThat(userService.getUserById(AbstractTest.USER_ID), equalTo(user));
-		verify(userDao, times(1)).read(AbstractTest.USER_ID);
+		assertThat(userService.getUserById(USER_ID), equalTo(user));
+		verify(userDao, times(1)).read(USER_ID);
 	}
 
 	/**
@@ -125,6 +133,7 @@ public class UserServiceImplTest extends AbstractTest {
 		verify(userDao, times(1)).delete(user);
 		verify(ticketDao, times(1)).getTicketsByUser(USER_ID);
 		verify(ticketDao, times(2)).delete(any(Ticket.class));
+		verify(userAccountDao, times(1)).delete(userAccount);
 	}
 
 }

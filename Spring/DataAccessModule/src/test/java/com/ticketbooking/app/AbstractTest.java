@@ -8,11 +8,13 @@ import java.text.ParseException;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 
+import com.ticketbooking.common.Functions;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.model.impl.EventImpl;
+import com.ticketbooking.model.impl.UserAccountImpl;
 import com.ticketbooking.model.impl.UserImpl;
-import com.ticketbooking.storage.Functions;
 
 /**
  * Abstract Test Class
@@ -32,6 +34,7 @@ public abstract class AbstractTest {
 	public static final long TICKET_ID = 23l;
 	public static final int PLACE = 234;
 	public static final String EVENT_NAME = "Concert";
+	public static final double USER_ACCOUNT_AMOUNT = 100.56;
 
 	/**
 	 * @throws java.lang.Exception
@@ -69,6 +72,12 @@ public abstract class AbstractTest {
 		clone.setDate(event.getDate());
 		clone.setTitle(clone.getTitle());
 		return clone;
+	}
+	
+	public UserAccount buildUserAccount(User user) {
+		UserAccount userAccount = new UserAccountImpl();
+		userAccount.setAmount(USER_ACCOUNT_AMOUNT);
+		return userAccount;
 	}
 
 }

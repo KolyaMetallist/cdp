@@ -23,12 +23,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.ticketbooking.app.AbstractTest;
+import com.ticketbooking.common.Functions;
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.impl.TicketImpl;
-import com.ticketbooking.storage.Functions;
 
 /**
  * Test for EventServiceImpl

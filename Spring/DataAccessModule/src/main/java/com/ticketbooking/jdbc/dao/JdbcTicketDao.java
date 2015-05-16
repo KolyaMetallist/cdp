@@ -25,7 +25,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	@Override
 	public Ticket create(Ticket entity) {
 		PreparedStatementCreator psc = connection -> {
-			PreparedStatement ps = connection.prepareStatement(INSERT_USER, new String[] {"id"});
+			PreparedStatement ps = connection.prepareStatement(INSERT_TICKET, new String[] {"ID"});
 			ps.setLong(1, entity.getEventId());
 			ps.setLong(2, entity.getUserId());
 			ps.setString(3, entity.getCategory().name());
@@ -49,8 +49,9 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public Ticket update(Ticket entity) {
-		// TODO Auto-generated method stub
-		return null;
+		Ticket ticket = read(entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_TICKET, entity.getEventId(), entity.getUserId(), entity.getCategory(), entity.getPlace(), entity.getId());
+		return rows > 0 ? ticket : null;
 	}
 
 	/* (non-Javadoc)
@@ -66,8 +67,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public List<Ticket> getTicketsByUser(long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_TICKET_BY_USER, new Object[] {userId}, ticketMapper);
 	}
 
 	/* (non-Javadoc)
@@ -75,8 +75,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public List<Ticket> getTicketsByEvent(long eventId) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_TICKET_BY_EVENT, new Object[] {eventId}, ticketMapper);
 	}
 
 }

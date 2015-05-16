@@ -39,8 +39,9 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 	 */
 	@Override
 	public UserAccount update(UserAccount entity) {
-		// TODO Auto-generated method stub
-		return null;
+		UserAccount userAccount = read(entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_USER_ACCOUNT, entity.getAmount(), entity.getId());
+		return rows > 0 ? userAccount : null;
 	}
 
 	/* (non-Javadoc)
