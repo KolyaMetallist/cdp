@@ -9,7 +9,7 @@ import com.ticketbooking.model.Entity;
  * General implementation of entity
  *
  */
-public class AbstractEntity implements Entity {
+public abstract class AbstractEntity implements Entity {
 	
 	private long id;
 
