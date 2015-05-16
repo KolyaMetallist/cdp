@@ -35,6 +35,7 @@ public abstract class AbstractTest {
 	public static final int PLACE = 234;
 	public static final String EVENT_NAME = "Concert";
 	public static final double USER_ACCOUNT_AMOUNT = 100.56;
+	public static final double DELTA = 45.45;
 
 	/**
 	 * @throws java.lang.Exception

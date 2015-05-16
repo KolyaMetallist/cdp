@@ -10,14 +10,13 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import com.ticketbooking.dao.model.TicketDao;
 import com.ticketbooking.model.Ticket;
+import com.ticketbooking.model.impl.TicketImpl;
 
 /**
  * @author Mykola_Bazhenov
  *
  */
 public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao {
-	
-	private static final String TICKET = "TICKET";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -41,7 +40,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public Ticket read(long id) {
-		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, TICKET), new Object[] {id}, ticketMapper);
+		return super.read(new TicketImpl(), id, ticketMapper);
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +58,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	 */
 	@Override
 	public List<Ticket> getAll() {
-		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, TICKET), ticketMapper);
+		return super.getAll(new TicketImpl(), ticketMapper);
 	}
 
 	/* (non-Javadoc)

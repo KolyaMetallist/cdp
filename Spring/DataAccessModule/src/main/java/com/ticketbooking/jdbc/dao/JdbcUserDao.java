@@ -10,14 +10,13 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.impl.UserImpl;
 
 /**
  * @author Mykola_Bazhenov
  *
  */
 public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
-	
-	private static final String USER = "USER";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -39,7 +38,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public User read(long id) {
-		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, USER), new Object[] {id}, userMapper);
+		return super.read(new UserImpl(), id, userMapper);
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +56,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public List<User> getAll() {
-		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, USER), userMapper);
+		return super.getAll(new UserImpl(), userMapper);
 	}
 
 	/* (non-Javadoc)

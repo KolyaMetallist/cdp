@@ -6,6 +6,7 @@ package com.ticketbooking.app;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -29,6 +30,7 @@ import com.ticketbooking.facade.BookingFacade;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 
 /**
  * Integration test
@@ -60,6 +62,9 @@ public class IntegrationTest extends AbstractTest{
 		assertNotNull(bookingFacade.getUserById(user.getId()));
 		assertThat(user.getId(), not(0));
 		
+		UserAccount userAccount = bookingFacade.createUserAccount(user, USER_ACCOUNT_AMOUNT);
+		assertNotNull(bookingFacade.getUserAccountById(userAccount.getId()));
+		
 		Event event = buildEvent();
 		bookingFacade.createEvent(event);
 		assertNotNull(bookingFacade.getEventById(event.getId()));
@@ -80,6 +85,7 @@ public class IntegrationTest extends AbstractTest{
 	public void testUserServices() throws ParseException {
 		User user = buildUser();
 		bookingFacade.createUser(user);
+		bookingFacade.createUserAccount(user, USER_ACCOUNT_AMOUNT);
 		
 		assertThat(bookingFacade.getUsersByName(AbstractTest.USER_NAME, 10, 1), hasItem(user));
 		assertThat(bookingFacade.getUserByEmail(USER_EMAIL), equalTo(user));
@@ -93,9 +99,10 @@ public class IntegrationTest extends AbstractTest{
 		Event event = buildEvent();
 		bookingFacade.createEvent(event);
 		Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 234, Ticket.Category.PREMIUM);
-		bookingFacade.deleteUser(user.getId());
+		assertTrue(bookingFacade.deleteUser(user.getId()));
 		assertNull(bookingFacade.getUserById(user.getId()));
 		assertFalse(bookingFacade.getBookedTickets(user, 10, 1).contains(ticket));
+		assertNull(bookingFacade.getUserAccountById(user.getId()));
 	}
 	
 	@Test
@@ -115,9 +122,25 @@ public class IntegrationTest extends AbstractTest{
 		User user = buildUser();
 		bookingFacade.createUser(user);
 		Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 234, Ticket.Category.PREMIUM);
-		bookingFacade.deleteEvent(event.getId());
+		assertTrue(bookingFacade.deleteEvent(event.getId()));
 		assertNull(bookingFacade.getEventById(event.getId()));
 		assertFalse(bookingFacade.getBookedTickets(event, 10, 1).contains(ticket));
+	}
+	
+	@Test
+	public void testUserAccountServices() {
+		User user = buildUser();
+		bookingFacade.createUser(user);
+		
+		UserAccount userAccount = bookingFacade.createUserAccount(user, USER_ACCOUNT_AMOUNT);
+		assertEquals(user.getId(), userAccount.getId());
+		
+		assertTrue(bookingFacade.refillUserAccount(user, DELTA));
+		userAccount = bookingFacade.getUserAccountById(user.getId());
+		assertThat(userAccount.getAmount(), equalTo(USER_ACCOUNT_AMOUNT + DELTA));
+		
+		assertTrue(bookingFacade.deleteUserAccount(userAccount.getId()));
+		assertNull(bookingFacade.getUserAccountById(user.getId()));
 	}
 	
 	@After

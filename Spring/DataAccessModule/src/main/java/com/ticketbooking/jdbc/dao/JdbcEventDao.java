@@ -11,14 +11,13 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.model.Event;
+import com.ticketbooking.model.impl.EventImpl;
 
 /**
  * @author Mykola_Bazhenov
  *
  */
 public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
-	
-	private static final String EVENT = "EVENT";
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -41,7 +40,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public Event read(long id) {
-		return jdbcTemplate.queryForObject(String.format(SELECT_STATEMENT, EVENT), new Object[] {id}, eventMapper);
+		return super.read(new EventImpl(), id, eventMapper);
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +58,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public List<Event> getAll() {
-		return jdbcTemplate.query(String.format(SELECT_ALL_STATEMENT, EVENT), eventMapper);
+		return super.getAll(new EventImpl(), eventMapper);
 	}
 
 	/* (non-Javadoc)
