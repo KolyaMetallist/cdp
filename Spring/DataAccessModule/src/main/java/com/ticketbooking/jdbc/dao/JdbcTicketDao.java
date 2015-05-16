@@ -54,15 +54,6 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ticketbooking.dao.Dao#delete(com.ticketbooking.model.Entity)
-	 */
-	@Override
-	public Ticket delete(Ticket entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#getAll()
 	 */
 	@Override

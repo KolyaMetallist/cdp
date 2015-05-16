@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
 import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.User;
@@ -49,17 +47,9 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 	 */
 	@Override
 	public User update(User entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.dao.Dao#delete(com.ticketbooking.model.Entity)
-	 */
-	@Override
-	public User delete(User entity) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = read(entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_USER, entity.getName(), entity.getEmail(), entity.getId());
+		return rows > 0 ? user : null;
 	}
 
 	/* (non-Javadoc)

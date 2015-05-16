@@ -3,6 +3,8 @@
  */
 package com.ticketbooking.jdbc.dao;
 
+import static com.ticketbooking.storage.Functions.DATE_FORMAT_DB;
+
 import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.model.Event;
-import com.ticketbooking.storage.Functions;
 
 /**
  * @author Mykola_Bazhenov
@@ -29,7 +30,7 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 		PreparedStatementCreator psc = connection -> {
 			PreparedStatement ps = connection.prepareStatement(INSERT_EVENT, new String[] {"id"});
 			ps.setString(1, entity.getTitle());
-			ps.setString(2, Functions.DATE_FORMAT_DB.format(entity.getDate()));
+			ps.setString(2, DATE_FORMAT_DB.format(entity.getDate()));
 			ps.setDouble(3, entity.getTicketPrice());
 			return ps;
 		};
@@ -50,17 +51,9 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 	 */
 	@Override
 	public Event update(Event entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ticketbooking.dao.Dao#delete(com.ticketbooking.model.Entity)
-	 */
-	@Override
-	public Event delete(Event entity) {
-		// TODO Auto-generated method stub
-		return null;
+		Event event = read(entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_USER, entity.getTitle(), DATE_FORMAT_DB.format(entity.getDate()), entity.getTicketPrice(), entity.getId());
+		return rows > 0 ? event : null;
 	}
 
 	/* (non-Javadoc)

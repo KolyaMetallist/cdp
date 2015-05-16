@@ -6,7 +6,6 @@ package com.ticketbooking.model.impl;
 import java.util.Date;
 
 import com.ticketbooking.model.Event;
-import com.ticketbooking.storage.Functions;
 
 /**
  * Implementation for Event

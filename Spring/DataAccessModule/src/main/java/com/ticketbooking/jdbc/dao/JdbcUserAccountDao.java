@@ -44,15 +44,6 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ticketbooking.dao.Dao#delete(com.ticketbooking.model.Entity)
-	 */
-	@Override
-	public UserAccount delete(UserAccount entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#getAll()
 	 */
 	@Override

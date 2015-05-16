@@ -3,6 +3,8 @@
  */
 package com.ticketbooking.jdbc.dao;
 
+import static com.ticketbooking.storage.Functions.getEntityName;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,10 +17,10 @@ import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.UserAccount;
-import com.ticketbooking.model.impl.UserImpl;
 import com.ticketbooking.model.impl.EventImpl;
 import com.ticketbooking.model.impl.TicketImpl;
 import com.ticketbooking.model.impl.UserAccountImpl;
+import com.ticketbooking.model.impl.UserImpl;
 
 /**
  * Holds the common Dao operations, CRUD, link to database
@@ -66,11 +68,26 @@ public abstract class AbstractJdbcDao<E extends Entity> implements Dao<E> {
 	protected static final String INSERT_EVENT = "INSERT INTO EVENT (TITLE, DATE, TICKETPRICE) VALUES (?,?,?)";
 	protected static final String INSERT_TICKET = "INSERT INTO TICKET (EVENT_ID, USER_ID, CATEGORY, PLACE) VALUES (?,?,?,?)";
 	protected static final String INSERT_USER_ACCOUNT = "INSERT INTO USER_ACCOUNT VALUES (?,?)";
+	protected static final String UPDATE_USER = "UPDATE USER SET NAME = ?, EMAIL = ? WHERE ID = ?";
+	protected static final String UPDATE_EVENT = "UPDATE EVENT SET TITLE = ?, DATE = ?, TICKETPRICE = ? WHERE ID = ?";
+	protected static final String UPDATE_TICKET = "UPDATE TICKET SET EVENT_ID = ?, USER_ID = ?, CATEGORY = ?, PLACE = ? WHERE ID = ?";
+	protected static final String UPDATE_USER_ACCOUNT = "UPDATE USER_ACCOUNT SET AMOUNT = ? WHERE ID = ?";
+	protected static final String DELETE_STATEMENT = "DELETE FROM %s WHERE ID = ?";
 	
 	protected JdbcTemplate jdbcTemplate;
 	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ticketbooking.dao.Dao#delete(com.ticketbooking.model.Entity)
+	 */
+	@Override
+	public E delete(E entity) {
+		E oldEntity = read(entity.getId());
+		int rows = jdbcTemplate.update(String.format(DELETE_STATEMENT, getEntityName.apply(entity)), entity.getId());
+		return rows > 0 ? oldEntity : null;
 	}
 	
 	protected void createEntityWithAutoIncrement(PreparedStatementCreator psc, E entity) {

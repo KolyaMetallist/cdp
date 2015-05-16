@@ -32,6 +32,12 @@ public abstract class Functions {
 																.toLowerCase() +
 																COMPOSE_ID_DELIMITER +
 																x.getId();
+	
+	public static final Function<Entity, String> getEntityName = x -> x
+																	.getClass()
+																	.getInterfaces()[0]
+																	.getSimpleName()
+																	.toUpperCase();
 
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final DateFormat DATE_FORMAT_DB = new SimpleDateFormat("yyyy-MM-dd");
