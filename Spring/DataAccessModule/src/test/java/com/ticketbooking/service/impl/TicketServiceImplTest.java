@@ -28,6 +28,7 @@ import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
+import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.model.impl.TicketImpl;
 
 /**
@@ -47,9 +48,13 @@ public class TicketServiceImplTest extends AbstractTest {
 	private UserDao userDao;
 	@Mock
 	private EventDao eventDao;
-
+	@Mock
 	private User user;
+	@Mock
 	private Event event;
+	@Mock
+	private UserAccount userAccount;
+	
 	private Ticket ticket;
 
 	/**
@@ -58,20 +63,23 @@ public class TicketServiceImplTest extends AbstractTest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		ticket = new TicketImpl();
-		user = buildUser();
-		event = buildEvent();
+		ticket = buildTicket();
 		when(ticketDao.create(any(Ticket.class))).thenAnswer(invocation ->
 				{Ticket ticket = (Ticket) invocation.getArguments()[0];
 				 ticket.setId(TICKET_ID);
 				 return null;});
-		
+		when(userDao.read(USER_ID)).thenReturn(user);
+		when(userAccountDao.read(USER_ID)).thenReturn(userAccount);
+		when(eventDao.read(EVENT_ID)).thenReturn(event);
+		when(userAccountDao.update(userAccount)).thenReturn(any(UserAccount.class));
 		when(ticketDao.getTicketsByEvent(EVENT_ID)).thenReturn(Arrays.asList(ticket));
 		when(ticketDao.getTicketsByUser(USER_ID)).thenReturn(Arrays.asList(ticket));
-		when(user.getId()).thenReturn(USER_ID);
-		when(event.getId()).thenReturn(EVENT_ID);
 		when(ticketDao.read(TICKET_ID)).thenReturn(ticket);
 		when(ticketDao.delete(ticket)).thenReturn(ticket);
+		when(user.getId()).thenReturn(USER_ID);
+		when(event.getId()).thenReturn(EVENT_ID);
+		when(userAccount.getAmount()).thenReturn(USER_ACCOUNT_AMOUNT);
+		when(event.getTicketPrice()).thenReturn(EVENT_PRICE);
 	}
 
 	/**
@@ -87,6 +95,7 @@ public class TicketServiceImplTest extends AbstractTest {
 		assertThat(ticket.getPlace(), equalTo(PLACE));
 		assertThat(ticket.getCategory(), equalTo(Ticket.Category.PREMIUM));
 		verify(ticketDao, times(1)).create(any(Ticket.class));
+		verify(userDao, times(1)).read(USER_ID);
 	}
 
 	/**
@@ -96,7 +105,6 @@ public class TicketServiceImplTest extends AbstractTest {
 	public void testGetBookedTicketsUserIntInt() {
 		assertThat(ticketService.getBookedTickets(user, 10, 1), hasItem(ticket));
 		verify(ticketDao, times(1)).getTicketsByUser(USER_ID);
-		verify(user, times(1)).getId();
 	}
 
 	/**
@@ -106,7 +114,6 @@ public class TicketServiceImplTest extends AbstractTest {
 	public void testGetBookedTicketsEventIntInt() {
 		assertThat(ticketService.getBookedTickets(event, 10, 1), hasItem(ticket));
 		verify(ticketDao, times(1)).getTicketsByEvent(EVENT_ID);
-		verify(event, times(1)).getId();
 	}
 
 	/**

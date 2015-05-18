@@ -10,9 +10,11 @@ import org.mockito.MockitoAnnotations;
 
 import com.ticketbooking.common.Functions;
 import com.ticketbooking.model.Event;
+import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.model.impl.EventImpl;
+import com.ticketbooking.model.impl.TicketImpl;
 import com.ticketbooking.model.impl.UserAccountImpl;
 import com.ticketbooking.model.impl.UserImpl;
 
@@ -81,6 +83,15 @@ public abstract class AbstractTest {
 		UserAccount userAccount = new UserAccountImpl();
 		userAccount.setAmount(USER_ACCOUNT_AMOUNT);
 		return userAccount;
+	}
+	
+	public Ticket buildTicket() {
+		Ticket ticket = new TicketImpl();
+		ticket.setUserId(USER_ID);
+		ticket.setEventId(EVENT_ID);
+		ticket.setPlace(PLACE);
+		ticket.setCategory(Ticket.Category.PREMIUM);
+		return ticket;
 	}
 
 }
