@@ -6,6 +6,9 @@ package com.ticketbooking.facade.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ticketbooking.facade.BookingFacade;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
@@ -22,6 +25,8 @@ import com.ticketbooking.service.UserService;
  *
  */
 public class BookingFacadeImpl implements BookingFacade {
+	
+	protected static final Logger logger = LogManager.getLogger();
 	
 	private UserService userService;
 	private EventService eventService;
@@ -137,7 +142,13 @@ public class BookingFacadeImpl implements BookingFacade {
 	@Override
 	public Ticket bookTicket(long userId, long eventId, int place,
 			Category category) {
-		return ticketService.bookTicket(userId, eventId, place, category);
+		Ticket ticket = null;
+		try {
+			ticket = ticketService.bookTicket(userId, eventId, place, category);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return ticket;
 	}
 
 	/* (non-Javadoc)

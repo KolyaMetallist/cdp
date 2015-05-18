@@ -52,8 +52,6 @@ public class IntegrationTest extends AbstractTest{
 	public void setUp() throws Exception {
 		 bookingFacade = context.getBean("bookingFacade", BookingFacade.class);
 	}
-	
-	
 
 	@Test
 	public void testBookingProcess() throws ParseException {
@@ -74,11 +72,19 @@ public class IntegrationTest extends AbstractTest{
 		assertThat(bookingFacade.getBookedTickets(user, 10, 1), hasItem(ticket));
 		assertThat(bookingFacade.getBookedTickets(event, 10, 1), hasItem(ticket));
 		assertThat(ticket.getId(), not(0));
+		assertTrue(bookingFacade.getUserAccountById(user.getId()).getAmount() < USER_ACCOUNT_AMOUNT );
 		
 		boolean isTicketCancelled = bookingFacade.cancelTicket(ticket.getId());
 		assertTrue(isTicketCancelled);
 		assertFalse(bookingFacade.getBookedTickets(event, 10, 1).contains(ticket));
 		assertFalse(bookingFacade.getBookedTickets(user, 10, 1).contains(ticket));
+		assertThat(bookingFacade.getUserAccountById(user.getId()).getAmount(), equalTo(USER_ACCOUNT_AMOUNT));
+		
+		// book the 1st ticket
+		ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 1, Ticket.Category.PREMIUM);
+		//book the 2nd
+		ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 2, Ticket.Category.PREMIUM);
+		assertNull(ticket);
 	}
 	
 	@Test
@@ -121,6 +127,7 @@ public class IntegrationTest extends AbstractTest{
 		
 		User user = buildUser();
 		bookingFacade.createUser(user);
+		bookingFacade.createUserAccount(user, USER_ACCOUNT_AMOUNT);
 		Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 234, Ticket.Category.PREMIUM);
 		assertTrue(bookingFacade.deleteEvent(event.getId()));
 		assertNull(bookingFacade.getEventById(event.getId()));

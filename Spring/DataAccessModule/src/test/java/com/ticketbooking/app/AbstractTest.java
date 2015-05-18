@@ -36,6 +36,7 @@ public abstract class AbstractTest {
 	public static final String EVENT_NAME = "Concert";
 	public static final double USER_ACCOUNT_AMOUNT = 100.56;
 	public static final double DELTA = 45.45;
+	public static final double EVENT_PRICE = 70.70;
 
 	/**
 	 * @throws java.lang.Exception
@@ -56,6 +57,7 @@ public abstract class AbstractTest {
 		Event event = new EventImpl();
 		event.setTitle(EVENT_FULL_NAME);
 		event.setDate(Functions.DATE_FORMAT.parse(EVENT_DATE));
+		event.setTicketPrice(EVENT_PRICE);
 		return event;
 	}
 	

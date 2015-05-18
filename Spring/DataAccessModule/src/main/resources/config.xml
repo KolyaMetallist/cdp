@@ -23,11 +23,18 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
+	<!--  Transaction support -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource"/>
+
 	<!-- Placeholder -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:locations="classpath:database.properties"/>
 		
+	<!-- DB datasource -->
 	<jdbc:embedded-database id="dataSource" type="HSQL">
 		<jdbc:script location="${db.schema}"/>
 		<jdbc:script location="${db.data}"/>
@@ -75,7 +82,10 @@
 		p:ticketDao-ref="ticketDao"/>
 	<bean id="ticketService"
 		class="com.ticketbooking.service.impl.TicketServiceImpl"
-		p:ticketDao-ref="ticketDao"/>
+		p:ticketDao-ref="ticketDao"
+		p:userDao-ref="userDao"
+		p:userAccountDao-ref="userAccountDao"
+		p:eventDao-ref="eventDao"/>
 	<bean id="userAccountService"
 		class="com.ticketbooking.service.impl.UserAccountServiceImpl"
 		p:userAccountDao-ref="userAccountDao"/>
