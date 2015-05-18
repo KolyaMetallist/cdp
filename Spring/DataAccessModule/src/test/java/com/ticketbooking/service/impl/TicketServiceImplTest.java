@@ -21,7 +21,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.ticketbooking.app.AbstractTest;
+import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.dao.model.TicketDao;
+import com.ticketbooking.dao.model.UserAccountDao;
+import com.ticketbooking.dao.model.UserDao;
 import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
@@ -39,10 +42,14 @@ public class TicketServiceImplTest extends AbstractTest {
 	@Mock
 	private TicketDao ticketDao;
 	@Mock
-	private User user;
+	private UserAccountDao userAccountDao;
 	@Mock
+	private UserDao userDao;
+	@Mock
+	private EventDao eventDao;
+
+	private User user;
 	private Event event;
-	
 	private Ticket ticket;
 
 	/**
@@ -52,10 +59,13 @@ public class TicketServiceImplTest extends AbstractTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		ticket = new TicketImpl();
+		user = buildUser();
+		event = buildEvent();
 		when(ticketDao.create(any(Ticket.class))).thenAnswer(invocation ->
 				{Ticket ticket = (Ticket) invocation.getArguments()[0];
 				 ticket.setId(TICKET_ID);
 				 return null;});
+		
 		when(ticketDao.getTicketsByEvent(EVENT_ID)).thenReturn(Arrays.asList(ticket));
 		when(ticketDao.getTicketsByUser(USER_ID)).thenReturn(Arrays.asList(ticket));
 		when(user.getId()).thenReturn(USER_ID);
