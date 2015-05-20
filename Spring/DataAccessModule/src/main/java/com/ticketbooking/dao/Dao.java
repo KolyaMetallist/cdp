@@ -66,4 +66,6 @@ public interface Dao<E extends Entity> {
 				.sorted()
 				.collect(toList());
 	}
+	
+	int[] batchInsert(List<E> entities);
 }

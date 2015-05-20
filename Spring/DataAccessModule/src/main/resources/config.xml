@@ -12,6 +12,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
@@ -21,7 +22,8 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd">
 
 	<!--  Transaction support -->
 	<tx:annotation-driven transaction-manager="txManager"/>
@@ -32,7 +34,7 @@
 	<!-- Placeholder -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:locations="classpath:database.properties"/>
+		p:locations="classpath:settings.properties"/>
 		
 	<!-- DB datasource -->
 	<jdbc:embedded-database id="dataSource" type="HSQL">
@@ -43,6 +45,18 @@
 	<bean id="jdbcTemplate"
 		class="com.ticketbooking.jdbc.core.JdbcTemplateExtended"
 		p:dataSource-ref="dataSource"/>
+	
+	<!--  OXM -->
+	<oxm:jaxb2-marshaller id="marshaller">
+		<oxm:class-to-be-bound name="com.ticketbooking.oxm.bean.Tickets"/>
+		<oxm:class-to-be-bound name="com.ticketbooking.model.impl.TicketImpl"/>
+	</oxm:jaxb2-marshaller>
+	
+	<bean id="oxmProcessor"
+		class="com.ticketbooking.oxm.core.impl.OXMProcessorImpl"
+		p:marshaller-ref="marshaller"
+		p:unMarshaller-ref="marshaller"
+		p:ticketsResource="${xml.ticket.data}"/>
 	
 	<!-- Dao -->
 	<bean id="abstractDao"
@@ -85,7 +99,9 @@
 		p:ticketDao-ref="ticketDao"
 		p:userDao-ref="userDao"
 		p:userAccountDao-ref="userAccountDao"
-		p:eventDao-ref="eventDao"/>
+		p:eventDao-ref="eventDao"
+		p:oxmProcessor-ref="oxmProcessor"
+		p:txManager-ref="txManager"/>
 	<bean id="userAccountService"
 		class="com.ticketbooking.service.impl.UserAccountServiceImpl"
 		p:userAccountDao-ref="userAccountDao"/>

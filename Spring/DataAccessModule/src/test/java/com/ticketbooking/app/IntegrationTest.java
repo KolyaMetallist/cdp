@@ -150,6 +150,17 @@ public class IntegrationTest extends AbstractTest{
 		assertNull(bookingFacade.getUserAccountById(user.getId()));
 	}
 	
+	@Test
+	public void testOXMProcess() {
+		bookingFacade.loadTicketBase();
+
+		User user = bookingFacade.getUserById(2);
+		Event event = bookingFacade.getEventById(2);
+		
+		assertThat(bookingFacade.getBookedTickets(user, 10, 1).size(), equalTo(7));
+		assertThat(bookingFacade.getBookedTickets(event, 10, 1).size(), equalTo(7));
+	}
+	
 	@After
 	public final void tearDown() {
 		context.registerShutdownHook();

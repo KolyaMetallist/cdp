@@ -6,9 +6,9 @@ package com.ticketbooking.model;
 public interface Ticket extends Entity {
     public enum Category {STANDARD, PREMIUM, BAR}
 
-    long getEventId();
-    void setEventId(long eventId);
-    long getUserId();
+    long getEventId(); 
+    void setEventId(long eventId);      
+    long getUserId();    
     void setUserId(long userId);
     Category getCategory();
     void setCategory(Category category);

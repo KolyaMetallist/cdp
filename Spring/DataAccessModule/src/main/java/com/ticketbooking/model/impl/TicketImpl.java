@@ -3,12 +3,16 @@
  */
 package com.ticketbooking.model.impl;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.ticketbooking.model.Ticket;
 
 /**
  * @author Mykola_Bazhenov
  *
  */
+@XmlRootElement(name = "ticket")
 public class TicketImpl extends AbstractEntity implements Ticket {
 	
 	private long eventId;
@@ -20,6 +24,7 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 	 * @see com.ticketbooking.model.Ticket#getEventId()
 	 */
 	@Override
+	@XmlAttribute(name = "event")
 	public long getEventId() {
 		return eventId;
 	}
@@ -36,6 +41,7 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 	 * @see com.ticketbooking.model.Ticket#getUserId()
 	 */
 	@Override
+	@XmlAttribute(name = "user")
 	public long getUserId() {
 		return userId;
 	}
@@ -52,6 +58,7 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 	 * @see com.ticketbooking.model.Ticket#getCategory()
 	 */
 	@Override
+	@XmlAttribute(name = "category")
 	public Category getCategory() {
 		return category;
 	}
@@ -68,6 +75,7 @@ public class TicketImpl extends AbstractEntity implements Ticket {
 	 * @see com.ticketbooking.model.Ticket#getPlace()
 	 */
 	@Override
+	@XmlAttribute(name = "place")
 	public int getPlace() {
 		return place;
 	}

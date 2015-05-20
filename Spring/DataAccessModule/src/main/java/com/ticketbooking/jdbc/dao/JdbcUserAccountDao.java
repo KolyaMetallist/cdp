@@ -51,4 +51,9 @@ public class JdbcUserAccountDao extends AbstractJdbcDao<UserAccount> implements
 		return super.getAll(new UserAccountImpl(), userAccountMapper);
 	}
 
+	@Override
+	public int[] batchInsert(List<UserAccount> entities) {
+		throw new UnsupportedOperationException("batchInsert");
+	}
+
 }

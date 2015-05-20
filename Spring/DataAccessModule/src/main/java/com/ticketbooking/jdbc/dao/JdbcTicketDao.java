@@ -3,6 +3,8 @@
  */
 package com.ticketbooking.jdbc.dao;
 
+import static java.util.stream.Collectors.toList;
+
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	@Override
 	public Ticket update(Ticket entity) {
 		Ticket ticket = read(entity.getId());
-		int rows = jdbcTemplate.update(UPDATE_TICKET, entity.getEventId(), entity.getUserId(), entity.getCategory(), entity.getPlace(), entity.getId());
+		int rows = jdbcTemplate.update(UPDATE_TICKET, entity.getEventId(), entity.getUserId(), entity.getCategory().name(), entity.getPlace(), entity.getId());
 		return rows > 0 ? ticket : null;
 	}
 
@@ -75,6 +77,18 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 	@Override
 	public List<Ticket> getTicketsByEvent(long eventId) {
 		return jdbcTemplate.query(SELECT_TICKET_BY_EVENT, new Object[] {eventId}, ticketMapper);
+	}
+
+	@Override
+	public int[] batchInsert(List<Ticket> entities) {
+		List<Object[]> batch = entities
+			 				.stream()
+			 				.map(ticket -> new Object[] {ticket.getEventId(), 
+			 											ticket.getUserId(), 
+			 											ticket.getCategory().name(), 
+			 											ticket.getPlace()})
+			 				.collect(toList());
+		return jdbcTemplate.batchUpdate(INSERT_TICKET, batch);
 	}
 
 }

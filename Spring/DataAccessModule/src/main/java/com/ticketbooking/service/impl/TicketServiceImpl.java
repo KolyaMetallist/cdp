@@ -5,10 +5,17 @@ package com.ticketbooking.service.impl;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.ticketbooking.dao.model.EventDao;
 import com.ticketbooking.dao.model.TicketDao;
@@ -20,6 +27,8 @@ import com.ticketbooking.model.Ticket.Category;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.UserAccount;
 import com.ticketbooking.model.impl.TicketImpl;
+import com.ticketbooking.oxm.bean.Tickets;
+import com.ticketbooking.oxm.core.OXMProcessor;
 import com.ticketbooking.service.TicketService;
 
 /**
@@ -35,6 +44,8 @@ public class TicketServiceImpl implements TicketService {
 	private UserAccountDao userAccountDao;
 	private UserDao userDao;
 	private EventDao eventDao;
+	private OXMProcessor oxmProcessor;
+	private PlatformTransactionManager txManager;
 	
 	public void setTicketDao(TicketDao ticketDao) {
 		this.ticketDao = ticketDao;
@@ -50,6 +61,14 @@ public class TicketServiceImpl implements TicketService {
 
 	public void setEventDao(EventDao eventDao) {
 		this.eventDao = eventDao;
+	}
+	
+	public void setOxmProcessor(OXMProcessor oxmProcessor) {
+		this.oxmProcessor = oxmProcessor;
+	}
+	
+	public void setTxManager(PlatformTransactionManager txManager) {
+		this.txManager = txManager;
 	}
 
 
@@ -142,8 +161,28 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public boolean loadTicketBase() {
-		// TODO Auto-generated method stub
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		
+		def.setName("XMLBatchInsert");
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		TransactionStatus status = txManager.getTransaction(def);
+		try {
+			Tickets tickets = oxmProcessor.loadTicketsInfo();
+			int[] batchCount = ticketDao.batchInsert(tickets.getTickets());
+			if (batchCount != null && batchCount.length == tickets.getTickets().size()) {
+				logger.info("All XML tickets have been loaded.");
+			} else {
+				throw new RuntimeException("XML tickets batch insert is unsuccessful");
+			}
+			txManager.commit(status);
+			return true;
+		} catch(Exception e) {
+			logger.error(e);
+			txManager.rollback(status);
+		}
 		return false;
 	}
 

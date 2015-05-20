@@ -75,4 +75,9 @@ public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
 		return jdbcTemplate.query(SELECT_USERS_BY_NAME, new Object[] {'%' + name.trim() + '%'}, userMapper);
 	}
 
+	@Override
+	public int[] batchInsert(List<User> entities) {
+		throw new UnsupportedOperationException("batchInsert");
+	}
+
 }

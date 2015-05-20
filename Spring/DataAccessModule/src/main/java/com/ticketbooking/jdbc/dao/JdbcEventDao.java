@@ -77,4 +77,9 @@ public class JdbcEventDao extends AbstractJdbcDao<Event> implements EventDao {
 		return jdbcTemplate.query(SELECT_EVENT_BY_DATE, new Object[] {new java.sql.Date(day.getTime())}, eventMapper);
 	}
 
+	@Override
+	public int[] batchInsert(List<Event> entities) {
+		throw new UnsupportedOperationException("batchInsert");
+	}
+
 }
