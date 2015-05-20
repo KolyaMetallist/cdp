@@ -50,5 +50,12 @@ public interface TicketService extends Service<Ticket> {
      * @return Flag whether anything has been canceled.
      */
     boolean cancelTicket(long ticketId);
+    
+    /**
+	 * Loads the tickets from the predefined xml file
+	 * 
+	 * @return Flag that shows whether the loading has been successful
+	 */
+	boolean loadTicketBase();
 
 }

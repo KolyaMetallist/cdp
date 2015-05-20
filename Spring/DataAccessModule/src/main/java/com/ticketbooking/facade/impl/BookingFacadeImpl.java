@@ -195,4 +195,9 @@ public class BookingFacadeImpl implements BookingFacade {
 		return userAccountService.deleteUserAccount(userAccountId);
 	}
 
+	@Override
+	public boolean loadTicketBase() {
+		return ticketService.loadTicketBase();
+	}
+
 }

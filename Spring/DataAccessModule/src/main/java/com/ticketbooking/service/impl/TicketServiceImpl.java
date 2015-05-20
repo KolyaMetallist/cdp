@@ -141,4 +141,10 @@ public class TicketServiceImpl implements TicketService {
 		}
 	}
 
+	@Override
+	public boolean loadTicketBase() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -173,6 +173,13 @@ public interface BookingFacade {
 	 * @return Flag that shows whether user account has been deleted.
 	 */
 	boolean deleteUserAccount(long userAccountId);
+	
+	/**
+	 * Loads the tickets from the predefined xml file
+	 * 
+	 * @return Flag that shows whether the loading has been successful
+	 */
+	boolean loadTicketBase();
 
 
 }
