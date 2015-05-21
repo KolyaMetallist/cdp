@@ -180,6 +180,18 @@ public interface BookingFacade {
 	 * @return Flag that shows whether the loading has been successful
 	 */
 	boolean loadTicketBase();
+	
+	/**
+	 * Set the default user to singleton bean
+	 * 
+	 * @param user - the user to be set as default
+	 */
+	void setDefaultUser(User user);
 
-
+	/**
+	 * Set the default event to singleton bean
+	 * 
+	 * @param event - the event to be set as default
+	 */
+	void setDefaultEvent(Event event);
 }

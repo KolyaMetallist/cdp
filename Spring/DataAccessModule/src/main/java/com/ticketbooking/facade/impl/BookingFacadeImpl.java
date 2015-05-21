@@ -15,6 +15,7 @@ import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.Ticket.Category;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.UserAccount;
+import com.ticketbooking.model.holder.DefaultHolder;
 import com.ticketbooking.service.EventService;
 import com.ticketbooking.service.TicketService;
 import com.ticketbooking.service.UserAccountService;
@@ -32,12 +33,17 @@ public class BookingFacadeImpl implements BookingFacade {
 	private EventService eventService;
 	private TicketService ticketService;
 	private UserAccountService userAccountService;
+	private DefaultHolder defaultHolder;
 	
 	public BookingFacadeImpl(UserService userService, EventService eventService, TicketService ticketService, UserAccountService userAccountService) {
 		this.userService = userService;
 		this.eventService = eventService;
 		this.ticketService = ticketService;
 		this.userAccountService = userAccountService;
+	}
+	
+	public void setDefaultHolder(DefaultHolder defaultHolder) {
+		this.defaultHolder = defaultHolder;
 	}
 
 	/* (non-Javadoc)
@@ -198,6 +204,16 @@ public class BookingFacadeImpl implements BookingFacade {
 	@Override
 	public boolean loadTicketBase() {
 		return ticketService.loadTicketBase();
+	}
+
+	@Override
+	public void setDefaultUser(User user) {
+		defaultHolder.setDefaultUser(user);
+	}
+
+	@Override
+	public void setDefaultEvent(Event event) {
+		defaultHolder.setDefaultEvent(event);
 	}
 
 }

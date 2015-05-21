@@ -133,7 +133,7 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-		logger.info("Getting tickets by user {}", event.getTitle());
+		logger.info("Getting tickets by event {}", event.getTitle());
 		return getPageList(ticketDao.getTicketsByEvent(event.getId()), pageNum, pageSize);
 	}
 
@@ -181,6 +181,15 @@ public class TicketServiceImpl implements TicketService {
 			txManager.rollback(status);
 		}
 		return false;
+	}
+	
+	public List<Ticket> getBookedTicketsDefault(User user, int pageSize, int pageNum) {
+		logger.info("Getting tickets by user {}", user.getName());
+		return getPageList(ticketDao.getTicketsByUserDefault(user), pageNum, pageSize);
+	}
+	
+	public List<Ticket> getBookedTicketsDefault(Event event, int pageSize, int pageNum) {
+		return getPageList(ticketDao.getTicketsByEventDefault(event), pageNum, pageSize);
 	}
 
 }

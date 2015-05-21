@@ -9,9 +9,15 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.ticketbooking.dao.model.TicketDao;
+import com.ticketbooking.jdbc.core.namedparam.BeanPropertySqlParameterSourceExtended;
+import com.ticketbooking.model.Event;
 import com.ticketbooking.model.Ticket;
+import com.ticketbooking.model.User;
+import com.ticketbooking.model.holder.DefaultHolder;
 import com.ticketbooking.model.impl.TicketImpl;
 
 /**
@@ -19,6 +25,17 @@ import com.ticketbooking.model.impl.TicketImpl;
  *
  */
 public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao {
+	
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	private DefaultHolder defaultHolder;
+	
+	public void setDataSource(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+	    this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+	}
+	
+	public void setDefaultHolder(DefaultHolder defaultHolder) {
+		this.defaultHolder = defaultHolder;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.ticketbooking.dao.Dao#create(com.ticketbooking.model.Entity)
@@ -89,6 +106,18 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 			 											ticket.getPlace()})
 			 				.collect(toList());
 		return jdbcTemplate.batchUpdate(INSERT_TICKET, batch);
+	}
+	
+	public List<Ticket> getTicketsByUserDefault(User user) {
+		String sql = "SELECT * FROM TICKET WHERE USER_ID = :id";
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSourceExtended(user, defaultHolder);
+		return namedParameterJdbcTemplate.query(sql, namedParameters, ticketMapper);
+	}
+	
+	public List<Ticket> getTicketsByEventDefault(Event event) {
+		String sql = "SELECT * FROM TICKET WHERE EVENT_ID = :id";
+		SqlParameterSource namedParameters = new BeanPropertySqlParameterSourceExtended(event, defaultHolder);
+		return namedParameterJdbcTemplate.query(sql, namedParameters, ticketMapper);
 	}
 
 }

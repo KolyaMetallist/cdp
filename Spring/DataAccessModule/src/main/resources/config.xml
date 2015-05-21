@@ -45,6 +45,10 @@
 	<bean id="jdbcTemplate"
 		class="com.ticketbooking.jdbc.core.JdbcTemplateExtended"
 		p:dataSource-ref="dataSource"/>
+		
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"
+		p:dataSource-ref="dataSource"/>
 	
 	<!--  OXM -->
 	<oxm:jaxb2-marshaller id="marshaller">
@@ -113,4 +117,8 @@
 		c:eventService-ref="eventService"
 		c:ticketService-ref="ticketService"
 		c:userAccountService-ref="userAccountService"/>
+		
+	<!--  Holder -->
+	<bean id="defaultHolder"
+		class="com.ticketbooking.model.holder.DefaultHolder" />
 </beans>
