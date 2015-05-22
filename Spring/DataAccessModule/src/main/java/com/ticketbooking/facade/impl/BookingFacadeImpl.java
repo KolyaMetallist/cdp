@@ -216,4 +216,16 @@ public class BookingFacadeImpl implements BookingFacade {
 		defaultHolder.setDefaultEvent(event);
 	}
 
+	@Override
+	public List<Ticket> getBookedTicketsDefault(User user, int pageSize,
+			int pageNum) {
+		return ticketService.getBookedTicketsDefault(user, pageSize, pageNum);
+	}
+
+	@Override
+	public List<Ticket> getBookedTicketsDefault(Event event, int pageSize,
+			int pageNum) {
+		return ticketService.getBookedTicketsDefault(event, pageSize, pageNum);
+	}
+
 }

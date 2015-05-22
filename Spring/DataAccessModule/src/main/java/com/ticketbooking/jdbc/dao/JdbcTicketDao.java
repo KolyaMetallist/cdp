@@ -108,12 +108,14 @@ public class JdbcTicketDao extends AbstractJdbcDao<Ticket> implements TicketDao 
 		return jdbcTemplate.batchUpdate(INSERT_TICKET, batch);
 	}
 	
+	@Override
 	public List<Ticket> getTicketsByUserDefault(User user) {
 		String sql = "SELECT * FROM TICKET WHERE USER_ID = :id";
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSourceExtended(user, defaultHolder);
 		return namedParameterJdbcTemplate.query(sql, namedParameters, ticketMapper);
 	}
 	
+	@Override
 	public List<Ticket> getTicketsByEventDefault(Event event) {
 		String sql = "SELECT * FROM TICKET WHERE EVENT_ID = :id";
 		SqlParameterSource namedParameters = new BeanPropertySqlParameterSourceExtended(event, defaultHolder);

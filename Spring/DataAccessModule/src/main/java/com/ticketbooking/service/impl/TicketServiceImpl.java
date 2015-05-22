@@ -183,12 +183,15 @@ public class TicketServiceImpl implements TicketService {
 		return false;
 	}
 	
+	@Override
 	public List<Ticket> getBookedTicketsDefault(User user, int pageSize, int pageNum) {
 		logger.info("Getting tickets by user {}", user.getName());
 		return getPageList(ticketDao.getTicketsByUserDefault(user), pageNum, pageSize);
 	}
 	
+	@Override
 	public List<Ticket> getBookedTicketsDefault(Event event, int pageSize, int pageNum) {
+		logger.info("Getting tickets by event {}", event.getTitle());
 		return getPageList(ticketDao.getTicketsByEventDefault(event), pageNum, pageSize);
 	}
 

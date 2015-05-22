@@ -161,6 +161,26 @@ public class IntegrationTest extends AbstractTest{
 		assertThat(bookingFacade.getBookedTickets(event, 10, 1).size(), equalTo(7));
 	}
 	
+	@Test
+	public void testDefaultValues() throws ParseException {
+		User defaultUser = bookingFacade.createUser(buildUser());
+		bookingFacade.setDefaultUser(defaultUser);
+		bookingFacade.createUserAccount(defaultUser, USER_ACCOUNT_AMOUNT);
+		
+		User otherUser = bookingFacade.createUser(buildUser());
+		assertThat(otherUser.getId(), not(defaultUser.getId()));
+		
+		Event defaultEvent = bookingFacade.createEvent(buildEvent());
+		bookingFacade.setDefaultEvent(defaultEvent);
+		
+		Event otherEvent = bookingFacade.createEvent(buildEvent());
+		assertThat(otherEvent.getId(), not(defaultEvent.getId()));
+		
+		bookingFacade.bookTicket(defaultUser.getId(), defaultEvent.getId(), 1, Ticket.Category.STANDARD);
+		assertThat(bookingFacade.getBookedTicketsDefault(otherUser, 10, 1).get(0).getUserId(), equalTo(defaultUser.getId()));
+		assertThat(bookingFacade.getBookedTicketsDefault(otherEvent, 10, 1).get(0).getEventId(), equalTo(defaultEvent.getId()));
+	}
+	
 	@After
 	public final void tearDown() {
 		context.registerShutdownHook();
