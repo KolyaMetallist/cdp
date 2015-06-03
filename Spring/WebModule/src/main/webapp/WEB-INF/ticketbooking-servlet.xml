@@ -32,12 +32,19 @@
 	<!--  MVC -->
 	<context:component-scan base-package="com.ticketbooking.web" />
 	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/content/jsp/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-	 </bean>
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"
+		p:resourceLoaderPath="/WEB-INF/content/velocity/"/>
+	
+	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
+		p:cache="true"
+		p:prefix=""
+		p:suffix=".vm"
+		p:order="0"/>
+	
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/content/jsp/"
+		p:suffix=".jsp"
+		p:order="1"/>
+	 
 </beans>

@@ -1,0 +1,11 @@
+<html>
+	<head>
+		<title>Ticket booking</title>
+	</head>
+	<body>
+		<h1>Spring MVC and Velocity</h1>
+	    $screen_content
+	    <hr />
+	    Copyright
+	</body>
+</html>

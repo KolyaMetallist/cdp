@@ -56,4 +56,6 @@ public interface UserService extends Service<User> {
      */
     boolean deleteUser(long userId);
 
+	List<User> getAllUsers();
+
 }

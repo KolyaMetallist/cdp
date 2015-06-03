@@ -1,0 +1,6 @@
+<h2>List of users</h2>
+<ul>
+	#foreach($user in $users)
+		<li><a href="users/user/id/${user.id}">${user.name}</li>
+	#end
+</ul>

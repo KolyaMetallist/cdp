@@ -213,4 +213,6 @@ public interface BookingFacade {
      * @return List of Ticket objects.
      */
 	List<Ticket> getBookedTicketsDefault(Event event, int pageSize, int pageNum);
+	
+	List<User> getAllUsers();
 }

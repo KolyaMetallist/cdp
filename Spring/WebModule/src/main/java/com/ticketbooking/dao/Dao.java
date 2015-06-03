@@ -3,6 +3,7 @@
  */
 package com.ticketbooking.dao;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public interface Dao<E extends Entity> {
 		return this
 				.getAll()
 				.stream()
-				.sorted()
+				.sorted(comparing(Entity::getId))
 				.collect(toList());
 	}
 	

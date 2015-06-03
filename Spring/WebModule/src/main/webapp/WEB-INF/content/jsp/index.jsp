@@ -1,6 +1,10 @@
 <html>
 	<body>
-	    <h1>Spring 4.0.2 MVC web service</h1>
-	    <h3>Name : ${name}</h3>
+	    <h1>Ticket booking system</h1>
+	     <ul>
+		 	<li><a href="users">Users</a></li>
+		 	<li><a href="events">Events</a></li>
+		 	<li><a href="tickets">Tickets</a></li>
+		</ul> 
 	</body>
 </html>
