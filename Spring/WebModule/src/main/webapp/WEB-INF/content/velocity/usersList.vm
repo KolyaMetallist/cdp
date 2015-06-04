@@ -4,3 +4,5 @@
 		<li><a href="users/user/id/${user.id}">${user.name}</li>
 	#end
 </ul>
+<br>
+<a href="users/user/create">Create a new user<a>
