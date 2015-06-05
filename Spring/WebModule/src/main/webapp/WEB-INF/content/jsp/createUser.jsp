@@ -13,11 +13,11 @@
         		</tr>
        			<tr>
             		<td>Email:</td>
-            		<td><input path="email" value="leonidillich@kpss.su"/></td>
+            		<td><input name="email" value="leonidillich@kpss.su"/></td>
         		</tr>
         		<tr>
             		<td>Amount:</td>
-            		<td><input path="amount" value="0.0"/></td>
+            		<td><input name="amount" value="0.0"/></td>
         		</tr>
         		<tr>
             		<td colspan="2">
