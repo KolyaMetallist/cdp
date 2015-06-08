@@ -1,7 +1,11 @@
 <h2>List of users</h2>
 <ul>
 	#foreach($user in $users)
-		<li><a href="users/user/id/${user.id}">${user.name}</li>
+		<li>
+			<a href="users/user/id/${user.id}">${user.name}</a>
+			&nbsp;
+			<a href="tickets/user/id/${user.id}">Get users's tickets</a>
+		</li>
 	#end
 </ul>
 <br>

@@ -195,4 +195,10 @@ public class TicketServiceImpl implements TicketService {
 		return getPageList(ticketDao.getTicketsByEventDefault(event), pageNum, pageSize);
 	}
 
+	@Override
+	public List<Ticket> getAllTickets() {
+		logger.info("Getting all tickets");
+		return ticketDao.getAllSorted();
+	}
+
 }

@@ -6,5 +6,7 @@
 		 	<li><a href="events">Events</a></li>
 		 	<li><a href="tickets">Tickets</a></li>
 		</ul> 
+		<br>
+		<a href="tickets/ticket/book">Book ticket<a>
 	</body>
 </html>

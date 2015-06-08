@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ticketbooking.facade.BookingFacade;
 import com.ticketbooking.model.Event;
@@ -231,6 +233,24 @@ public class BookingFacadeImpl implements BookingFacade {
 	@Override
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public User createUserWithAccount(User user, double amount) {
+		userService.createUser(user);
+		userAccountService.createUserAccount(user, amount);
+		return user;
+	}
+
+	@Override
+	public List<Event> getAllEvents() {
+		return eventService.getAllEvents();
+	}
+
+	@Override
+	public List<Ticket> getAllTickets() {
+		return ticketService.getAllTickets();
 	}
 
 }

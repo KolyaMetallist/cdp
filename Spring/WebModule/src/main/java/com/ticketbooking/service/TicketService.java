@@ -77,4 +77,6 @@ public interface TicketService extends Service<Ticket> {
      */
 	List<Ticket> getBookedTicketsDefault(Event event, int pageSize, int pageNum);
 
+	List<Ticket> getAllTickets();
+
 }

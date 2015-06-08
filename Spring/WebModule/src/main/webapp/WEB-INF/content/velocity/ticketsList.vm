@@ -1,0 +1,20 @@
+<h2>List of tickets</h2>
+	<table>
+    	<tr>
+			<td>Ticket Id</td>	
+			<td>User Id</td>
+			<td>Event Id</td>
+			<td>Category</td>
+			<td>Place</td>
+		</tr>
+		#foreach($ticket in $tickets)
+			<tr>
+				<td>${ticket.id}</td>	
+				<td>${ticket.userId}</td>
+				<td>${ticket.eventId}</td>
+				<td>${ticket.category}</td>
+				<td>${ticket.place}</td>
+			</tr>
+		#end
+	</table>
+<br>

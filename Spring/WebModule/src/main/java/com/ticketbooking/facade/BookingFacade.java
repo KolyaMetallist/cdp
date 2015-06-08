@@ -12,6 +12,10 @@ import java.util.List;
  * Groups together all operations related to tickets booking.
  * Created by maksym_govorischev.
  */
+/**
+ * @author Mykola_Bazhenov
+ *
+ */
 public interface BookingFacade {
 
     /**
@@ -89,6 +93,16 @@ public interface BookingFacade {
      * @return Created User object.
      */
     User createUser(User user);
+    
+    
+    /**
+     * Create new user with account in one transaction
+     * 
+     * @param user - user data
+     * @param amount - initial amount
+     * @return created user
+     */
+    User createUserWithAccount(User user, double amount);
 
     /**
      * Updates user using given data.
@@ -215,4 +229,8 @@ public interface BookingFacade {
 	List<Ticket> getBookedTicketsDefault(Event event, int pageSize, int pageNum);
 	
 	List<User> getAllUsers();
+	
+	List<Event> getAllEvents();
+	
+	List<Ticket> getAllTickets();
 }

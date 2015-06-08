@@ -1,0 +1,8 @@
+<h2>List of events</h2>
+<ul>
+	#foreach($event in $events)
+		<li><a href="events/event/id/${event.id}">${event.title}</li>
+	#end
+</ul>
+<br>
+<a href="events/event/create">Create a new event<a>

@@ -95,4 +95,10 @@ public class EventServiceImpl implements EventService {
 		}
 	}
 
+	@Override
+	public List<Event> getAllEvents() {
+		logger.info("Getting all events");
+		return eventDao.getAllSorted();
+	}
+
 }

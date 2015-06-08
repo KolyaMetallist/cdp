@@ -61,4 +61,6 @@ public interface EventService extends Service<Event> {
      */
     boolean deleteEvent(long eventId);
 
+	List<Event> getAllEvents();
+
 }

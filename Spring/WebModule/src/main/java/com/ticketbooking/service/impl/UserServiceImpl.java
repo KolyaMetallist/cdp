@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> getAllUsers() {
+		logger.info("Getting all users");
 		return userDao.getAllSorted();
 	}
 

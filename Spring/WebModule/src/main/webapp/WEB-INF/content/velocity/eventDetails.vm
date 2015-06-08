@@ -1,0 +1,6 @@
+<h2>Detail of Event</h2>
+<p>Id: ${event.id}</p>
+<p>Title: ${event.title}</p>
+<p>Date: ${event.date}</p>
+<p>Ticket price: ${event.ticketPrice}</p>
+<br>
