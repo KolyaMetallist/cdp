@@ -3,11 +3,14 @@ package com.ticketbooking.web.controller;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.groupingBy;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +57,13 @@ public class TicketController {
 		}
 	}
 	
-	
+	@RequestMapping(value = "/user/{id}/download", method = RequestMethod.GET)
+	public List<Ticket> getPdfUserTickets(@PathVariable(value = "id") long userId, Model model) {
+		List<Ticket> tickets = null;
+		User user = bookingFacade.getUserById(userId);
+		tickets = bookingFacade.getBookedTickets(user, 20, 1);
+		model.addAttribute("tickets", tickets);
+		return tickets;
+	}
 
 }

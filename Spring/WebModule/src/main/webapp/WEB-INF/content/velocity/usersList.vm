@@ -4,7 +4,7 @@
 		<li>
 			<a href="users/user/id/${user.id}">${user.name}</a>
 			&nbsp;
-			<a href="tickets/user/id/${user.id}">Get users's tickets</a>
+			<a href="tickets/user/${user.id}/download.pdf">Get users's tickets</a>
 		</li>
 	#end
 </ul>

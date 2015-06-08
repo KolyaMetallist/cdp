@@ -94,6 +94,13 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${spring-framework.version}</version>
 		</dependency>
+		
+		<!-- PDF -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.6</version>
+		</dependency>
 	    
 	    <!-- JDBC OXM -->
 	    <dependency>
