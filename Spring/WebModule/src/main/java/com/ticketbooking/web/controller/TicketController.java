@@ -47,9 +47,9 @@ public class TicketController {
 	public String bookTicket(@RequestParam("userId")Long userId,
 							@RequestParam("eventId")Long eventId,
 							@RequestParam("category")Ticket.Category category,
-							@RequestParam("place")Integer place, Model model) {
+							@RequestParam("place")String place, Model model) {
 		try {
-			bookingFacade.bookTicket(userId, eventId, place, category);
+			bookingFacade.bookTicket(userId, eventId, Integer.parseInt(place), category);
 			return "redirect:/tickets";
 		} catch (Exception e) {
 			logger.error(e);

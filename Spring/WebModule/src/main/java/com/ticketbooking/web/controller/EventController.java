@@ -8,8 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ticketbooking.common.Functions;
 import com.ticketbooking.facade.BookingFacade;
+import com.ticketbooking.model.Event;
+import com.ticketbooking.model.impl.EventImpl;
 
 @Controller
 @RequestMapping("/events")
@@ -30,6 +34,29 @@ public class EventController {
 	public String getUserDetail(@PathVariable(value = "id") long eventId, Model model) {
 		model.addAttribute("event", bookingFacade.getEventById(eventId));
 		return "eventDetails";
+	}
+	
+	@RequestMapping(value = "/event/create",  method = RequestMethod.GET)
+	public String createEvent() {
+		return "createEvent";
+	}
+	
+	@RequestMapping(value = "/event/create", method = RequestMethod.POST)
+	public String submitEvent(@RequestParam("title")String title,
+							@RequestParam("date")String date,
+							@RequestParam("ticketPrice")String ticketPrice, Model model) {
+		try {
+			logger.info("Input parameters from form: title = {}, date = {}, ticketPrice = {}", title, date, ticketPrice);
+			Event event = new EventImpl();
+			event.setTitle(title);
+			event.setDate(Functions.DATE_FORMAT.parse(date));
+			event.setTicketPrice(Double.parseDouble(ticketPrice));
+			bookingFacade.createEvent(event);
+			return "redirect:/events/event/id/" + event.getId();
+		} catch (Exception e) {
+			logger.error(e);
+			return "createEvent";
+		}
 	}
 
 }
