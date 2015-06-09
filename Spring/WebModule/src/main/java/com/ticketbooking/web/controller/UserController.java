@@ -31,7 +31,11 @@ public class UserController {
 	
 	@RequestMapping(value = "/user/id/{id}", method = RequestMethod.GET)
 	public String getUserDetail(@PathVariable(value = "id") long userId, Model model) {
-		model.addAttribute("user", bookingFacade.getUserById(userId));
+		User user = bookingFacade.getUserById(userId);
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		model.addAttribute("user", user);
 		model.addAttribute("userAccount", bookingFacade.getUserAccountById(userId));
 		return "userDetails";
 	}
@@ -54,7 +58,7 @@ public class UserController {
 			return "redirect:/users/user/id/" + user.getId();
 		} catch (Exception e) {
 			logger.error(e);
-			return "createUser";
+			throw e;
 		}
 	}
 }

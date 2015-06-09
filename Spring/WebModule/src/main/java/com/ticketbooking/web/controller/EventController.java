@@ -32,7 +32,11 @@ public class EventController {
 	
 	@RequestMapping(value = "/event/id/{id}", method = RequestMethod.GET)
 	public String getUserDetail(@PathVariable(value = "id") long eventId, Model model) {
-		model.addAttribute("event", bookingFacade.getEventById(eventId));
+		Event event = bookingFacade.getEventById(eventId);
+		if (event == null) {
+			throw new RuntimeException("Event not found");
+		}
+		model.addAttribute("event", event);
 		return "eventDetails";
 	}
 	
@@ -44,7 +48,7 @@ public class EventController {
 	@RequestMapping(value = "/event/create", method = RequestMethod.POST)
 	public String submitEvent(@RequestParam("title")String title,
 							@RequestParam("date")String date,
-							@RequestParam("ticketPrice")String ticketPrice, Model model) {
+							@RequestParam("ticketPrice")String ticketPrice, Model model) throws Exception {
 		try {
 			logger.info("Input parameters from form: title = {}, date = {}, ticketPrice = {}", title, date, ticketPrice);
 			Event event = new EventImpl();
@@ -55,7 +59,7 @@ public class EventController {
 			return "redirect:/events/event/id/" + event.getId();
 		} catch (Exception e) {
 			logger.error(e);
-			return "createEvent";
+			throw e;
 		}
 	}
 

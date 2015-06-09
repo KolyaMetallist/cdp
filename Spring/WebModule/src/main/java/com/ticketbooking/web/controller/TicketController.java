@@ -53,7 +53,7 @@ public class TicketController {
 			return "redirect:/tickets";
 		} catch (Exception e) {
 			logger.error(e);
-			return "redirect:/tickets/ticket/book";
+			throw e;
 		}
 	}
 	
