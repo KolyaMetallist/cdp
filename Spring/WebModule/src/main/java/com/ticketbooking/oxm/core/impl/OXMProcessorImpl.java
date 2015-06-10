@@ -2,6 +2,7 @@ package com.ticketbooking.oxm.core.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
+import org.springframework.oxm.XmlMappingException;
 
 import com.ticketbooking.oxm.bean.Tickets;
 import com.ticketbooking.oxm.core.OXMProcessor;
@@ -28,15 +30,19 @@ public class OXMProcessorImpl implements OXMProcessor {
 	}
 	
 	@Override
-	public Tickets loadTicketsInfo() {
+	public Tickets loadTicketsInfo(InputStream inputStream) {
 		Tickets tickets = new Tickets();
-		try(FileInputStream inputStream = new FileInputStream(ticketsResource.getFile())) {
-			tickets = (Tickets) unmarshaller.unmarshal(new StreamSource(inputStream));
+		try (InputStream inputStreamInternal = 
+				inputStream != null ? 
+						inputStream : 
+							new FileInputStream(ticketsResource.getFile())) {
+			tickets = (Tickets) unmarshaller.unmarshal(new StreamSource(inputStreamInternal));
 		} catch (IOException e) {
 			logger.error(e);
 		}
 		return tickets;
 	}
+	
 	@Override
 	public Marshaller getMarchaller() {
 		return marshaller;

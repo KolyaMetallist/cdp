@@ -3,6 +3,7 @@
  */
 package com.ticketbooking.facade.impl;
 
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -155,6 +156,7 @@ public class BookingFacadeImpl implements BookingFacade {
 			ticket = ticketService.bookTicket(userId, eventId, place, category);
 		} catch (Exception e) {
 			logger.error(e);
+			throw e;
 		}
 		return ticket;
 	}
@@ -204,8 +206,12 @@ public class BookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public boolean loadTicketBase() {
-		return ticketService.loadTicketBase();
+	public boolean loadTicketBase(InputStream inputStream) {
+		return ticketService.loadTicketBase(inputStream);
+	}
+	
+	public boolean initLoadTicketBase() {
+		return this.loadTicketBase(null);
 	}
 
 	@Override

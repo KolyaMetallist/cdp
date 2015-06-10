@@ -1,5 +1,7 @@
 package com.ticketbooking.web.exception.resolver;
 
+import java.util.stream.Stream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +24,7 @@ public class CustomHandlerExceptionResolver implements HandlerExceptionResolver 
 			HttpServletResponse response, Object paramObject,
 			Exception exception){
 		logger.info("Resolve exception: {}", exception.getMessage());
+		Stream.of(exception.getStackTrace()).forEach(logger::info);
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		ModelAndView mav = new ModelAndView("error");
 		mav.addObject("error", exception);

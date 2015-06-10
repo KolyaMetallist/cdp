@@ -1,5 +1,8 @@
 package com.ticketbooking.oxm.core;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
@@ -18,6 +21,6 @@ public interface OXMProcessor {
 	
 	void setTicketsResource(Resource resource);
 	
-	Tickets loadTicketsInfo();
+	Tickets loadTicketsInfo(InputStream inputStream);
 
 }

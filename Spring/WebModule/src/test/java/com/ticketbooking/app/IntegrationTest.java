@@ -79,12 +79,22 @@ public class IntegrationTest extends AbstractTest{
 		assertFalse(bookingFacade.getBookedTickets(event, 10, 1).contains(ticket));
 		assertFalse(bookingFacade.getBookedTickets(user, 10, 1).contains(ticket));
 		assertThat(bookingFacade.getUserAccountById(user.getId()).getAmount(), equalTo(USER_ACCOUNT_AMOUNT));
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testBookingProcessWithException() throws ParseException {
+		User user = buildUser();
+		bookingFacade.createUser(user);
+		bookingFacade.createUserAccount(user, USER_ACCOUNT_AMOUNT);
+		
+		Event event = buildEvent();
+		bookingFacade.createEvent(event);
 		
 		// book the 1st ticket
-		ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 1, Ticket.Category.PREMIUM);
-		//book the 2nd
+		Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 1, Ticket.Category.PREMIUM);
+		assertNotNull(ticket);
+		//book the 2nd - expect fail
 		ticket = bookingFacade.bookTicket(user.getId(), event.getId(), 2, Ticket.Category.PREMIUM);
-		assertNull(ticket);
 	}
 	
 	@Test
@@ -152,7 +162,7 @@ public class IntegrationTest extends AbstractTest{
 	
 	@Test
 	public void testOXMProcess() {
-		bookingFacade.loadTicketBase();
+		//bookingFacade.loadTicketBase(null);
 
 		User user = bookingFacade.getUserById(2);
 		Event event = bookingFacade.getEventById(2);

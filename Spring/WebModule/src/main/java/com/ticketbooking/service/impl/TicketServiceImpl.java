@@ -3,6 +3,7 @@
  */
 package com.ticketbooking.service.impl;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -159,7 +160,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public boolean loadTicketBase() {
+	public boolean loadTicketBase(InputStream inputStream) {
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		
 		def.setName("XMLBatchInsert");
@@ -167,7 +168,7 @@ public class TicketServiceImpl implements TicketService {
 		
 		TransactionStatus status = txManager.getTransaction(def);
 		try {
-			Tickets tickets = oxmProcessor.loadTicketsInfo();
+			Tickets tickets = oxmProcessor.loadTicketsInfo(inputStream);
 			int[] batchCount = ticketDao.batchInsert(tickets.getTickets());
 			if (batchCount != null && batchCount.length == tickets.getTickets().size()) {
 				logger.info("All XML tickets have been loaded.");

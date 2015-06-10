@@ -5,6 +5,7 @@ import com.ticketbooking.model.Ticket;
 import com.ticketbooking.model.User;
 import com.ticketbooking.model.UserAccount;
 
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -193,7 +194,7 @@ public interface BookingFacade {
 	 * 
 	 * @return Flag that shows whether the loading has been successful
 	 */
-	boolean loadTicketBase();
+	boolean loadTicketBase(InputStream inputStream);
 	
 	/**
 	 * Set the default user to singleton bean

@@ -1,5 +1,10 @@
 <h2>List of tickets</h2>
 	<table>
+		#if($uploaded)
+			<font color="red">
+				File ${fileName} is uploaded!
+			</font>
+		#end
     	<tr>
 			<td>Ticket Id</td>	
 			<td>User Id</td>

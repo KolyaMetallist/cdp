@@ -3,6 +3,7 @@
  */
 package com.ticketbooking.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.ticketbooking.model.Event;
@@ -56,7 +57,7 @@ public interface TicketService extends Service<Ticket> {
 	 * 
 	 * @return Flag that shows whether the loading has been successful
 	 */
-	boolean loadTicketBase();
+	boolean loadTicketBase(InputStream inputStream);
 	
 	/**
 	 * Get all booked tickets for specified user. Checking the default user.

@@ -1,7 +1,6 @@
 package com.ticketbooking.web.controller;
 
 import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.groupingBy;
 
 import java.util.List;
 
