@@ -64,5 +64,11 @@ public class TicketController {
 		model.addAttribute("tickets", tickets);
 		return tickets;
 	}
+	
+	@RequestMapping(value = "/ticket/delete/{id}", method = RequestMethod.DELETE)
+	public String cancelTicket(@PathVariable(value = "id") long ticketId) {
+		bookingFacade.cancelTicket(ticketId);
+		return "redirect:/tickets";
+	}
 
 }

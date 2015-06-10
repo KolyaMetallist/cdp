@@ -19,6 +19,12 @@
 				<td>${ticket.eventId}</td>
 				<td>${ticket.category}</td>
 				<td>${ticket.place}</td>
+				<td>
+					<form id="${ticket.id}" action="tickets/ticket/delete/${ticket.id}" method="post">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" value="Delete"/>
+					</form>
+				</td>
 			</tr>
 		#end
 	</table>
