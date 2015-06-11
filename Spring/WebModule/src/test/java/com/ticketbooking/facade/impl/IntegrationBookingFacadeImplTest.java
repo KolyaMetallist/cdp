@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ticketbooking.app;
+package com.ticketbooking.facade.impl;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -25,6 +25,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ticketbooking.app.AbstractTest;
 import com.ticketbooking.common.Functions;
 import com.ticketbooking.facade.BookingFacade;
 import com.ticketbooking.model.Event;
@@ -39,7 +40,7 @@ import com.ticketbooking.model.UserAccount;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:core-context.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class IntegrationTest extends AbstractTest{
+public class IntegrationBookingFacadeImplTest extends AbstractTest{
 	
 	@Autowired
 	protected AbstractApplicationContext context;
