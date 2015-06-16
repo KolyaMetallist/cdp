@@ -35,7 +35,7 @@
 	<context:component-scan base-package="com.ticketbooking.web" />
 	
 	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"
-		p:resourceLoaderPath="/WEB-INF/content/velocity/"/>
+		p:resourceLoaderPath="/WEB-INF/content/velocity/" />
 	
 	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
 		p:cache="true"
