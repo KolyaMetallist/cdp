@@ -122,6 +122,44 @@ public class WebContextUserControllerTest extends AbstractTest{
 			.andExpect(status().isOk())
 			.andExpect(view().name("createUser"))
 			.andExpect(forwardedUrl("/WEB-INF/content/jsp/createUser.jsp"));
+		
+		verifyZeroInteractions(bookingFacadeMock);
+	}
+	
+	@Test
+	public void testSubmitUserSuccess() throws Exception {
+		mockMvc.perform(post("/users/user/create")
+				.param("name", USER_NAME)
+				.param("email", USER_EMAIL)
+				.param("amount", "100.56")
+				)
+				.andDo(print())
+				.andExpect(status().isFound())
+				.andExpect(view().name("redirect:/users/user/id/0"))
+				.andExpect(redirectedUrl("/users/user/id/0"));
+	}
+	
+	@Test
+	public void testSubmitUserFailure() throws Exception {
+		MvcResult mvcResult = mockMvc.perform(post("/users/user/create")
+				.param("name", USER_NAME)
+				.param("email", USER_EMAIL)
+				.param("amount", "symbol")
+				)
+				.andDo(print())
+				.andExpect(status().isInternalServerError())
+				.andExpect(view().name("error"))
+				.andExpect(model().attributeExists("error"))
+				.andExpect(forwardedUrl("/WEB-INF/content/jsp/error.jsp"))
+				.andReturn();
+		
+		assertThat(mvcResult.getResolvedException(), instanceOf(NumberFormatException.class));
+	}
+	
+	@Test
+	public void testPdf() throws Exception {
+		mockMvc.perform(get("/tickets/user/{id}/download.pdf", USER_ID))
+			.andDo(print());
 	}
 
 }
