@@ -21,8 +21,12 @@ public class FileUploadController {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
+	protected BookingFacade bookingFacade;
+	
 	@Autowired
-	private BookingFacade bookingFacade;
+	public FileUploadController(BookingFacade bookingFacade) {
+		this.bookingFacade = bookingFacade;
+	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String handleFormUpload(@RequestParam("file") Part file, RedirectAttributes redirectAttributes) throws IOException {

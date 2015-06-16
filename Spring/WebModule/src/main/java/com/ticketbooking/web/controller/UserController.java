@@ -20,8 +20,12 @@ public class UserController {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
+	protected BookingFacade bookingFacade;
+	
 	@Autowired
-	private BookingFacade bookingFacade;
+	public UserController(BookingFacade bookingFacade) {
+		this.bookingFacade = bookingFacade;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllUsers(Model model) {

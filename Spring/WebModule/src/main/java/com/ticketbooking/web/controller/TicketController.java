@@ -25,8 +25,12 @@ public class TicketController {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
+	protected BookingFacade bookingFacade;
+	
 	@Autowired
-	private BookingFacade bookingFacade;
+	public TicketController(BookingFacade bookingFacade) {
+		this.bookingFacade = bookingFacade;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllTickets(Model model) {
