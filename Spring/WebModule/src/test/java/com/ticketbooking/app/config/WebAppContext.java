@@ -47,7 +47,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public VelocityConfigurer velocityConfig() {
 	    VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
-	    velocityConfigurer.setResourceLoaderPath("/");
+	    velocityConfigurer.setResourceLoaderPath("/WEB-INF/content/velocity/");
 	    return velocityConfigurer;
 	}
 	
@@ -56,7 +56,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter {
 		VelocityViewResolver velocityViewResolver = new VelocityViewResolver();
 		velocityViewResolver.setCache(true);
 		velocityViewResolver.setOrder(1);
-		velocityViewResolver.setPrefix("/WEB-INF/content/velocity/");
+		velocityViewResolver.setPrefix("");
 		velocityViewResolver.setSuffix(".vm");
 		return velocityViewResolver;
 	}
