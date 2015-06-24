@@ -155,11 +155,5 @@ public class WebContextUserControllerTest extends AbstractTest{
 		
 		assertThat(mvcResult.getResolvedException(), instanceOf(NumberFormatException.class));
 	}
-	
-	@Test
-	public void testPdf() throws Exception {
-		mockMvc.perform(get("/tickets/user/{id}/download.pdf", USER_ID))
-			.andDo(print());
-	}
 
 }
